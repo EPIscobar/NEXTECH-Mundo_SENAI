@@ -1,0 +1,231 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0b1220;
+    color: #f1f5f9;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 8%;
+    border-bottom: 1px solid #263449;
+}
+
+.logo {
+    font-size: 26px;
+    letter-spacing: 2px;
+}
+
+.logo span,
+h1 span {
+    color: #35d6e8;
+}
+
+header p {
+    color: #8da2b8;
+    font-size: 12px;
+}
+
+main {
+    width: 90%;
+    max-width: 800px;
+    margin: 45px auto;
+}
+
+.painel {
+    background: #131f30;
+    border: 1px solid #293c51;
+    border-radius: 18px;
+    padding: 35px;
+    text-align: center;
+    box-shadow: 0 15px 40px #0003;
+}
+
+h1 {
+    font-size: 38px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-bottom: 15px;
+}
+
+p {
+    line-height: 1.6;
+    color: #b5c4d5;
+}
+
+button {
+    border: none;
+    border-radius: 9px;
+    padding: 15px 22px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.15);
+}
+
+#iniciar,
+#jogarNovamente {
+    background: #35d6e8;
+    color: #07131d;
+}
+
+.escondido {
+    display: none !important;
+}
+
+.indicadores {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.indicadores div {
+    background: #0b1625;
+    border: 1px solid #293c51;
+    border-radius: 10px;
+    padding: 15px 5px;
+}
+
+.indicadores small {
+    color: #8da2b8;
+}
+
+.indicadores h2 {
+    color: #35d6e8;
+    margin: 8px 0 0;
+}
+
+.produto {
+    width: 140px;
+    height: 120px;
+    margin: 25px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 65px;
+    background: #20364a;
+    border: 3px solid #35d6e8;
+    border-radius: 18px;
+    transition: 0.2s;
+}
+
+.produto.defeituoso {
+    border-color: #ff5368;
+    background: #40212c;
+    animation: tremer 0.2s infinite alternate;
+}
+
+@keyframes tremer {
+    from {
+        transform: rotate(-2deg);
+    }
+    to {
+        transform: rotate(2deg);
+    }
+}
+
+.botoes {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.botoes button {
+    min-width: 150px;
+}
+
+.verde {
+    background: #1d9b69;
+    color: white;
+}
+
+.vermelho {
+    background: #d94055;
+    color: white;
+}
+
+#feedback {
+    margin-top: 18px;
+    min-height: 25px;
+    font-weight: bold;
+}
+
+.estatisticas {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #293c51;
+}
+
+.estatisticas strong {
+    color: #35d6e8;
+}
+
+#pontuacaoFinal {
+    color: #35d6e8;
+    font-size: 55px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 550px) {
+    header {
+        padding: 20px 5%;
+        gap: 10px;
+    }
+
+    header p {
+        font-size: 9px;
+    }
+
+    main {
+        margin: 25px auto;
+    }
+
+    .painel {
+        padding: 22px 15px;
+    }
+
+    h1 {
+        font-size: 29px;
+    }
+
+    .indicadores {
+        gap: 5px;
+    }
+
+    .indicadores h2 {
+        font-size: 20px;
+    }
+
+    .estatisticas {
+        font-size: 12px;
+    }
+}

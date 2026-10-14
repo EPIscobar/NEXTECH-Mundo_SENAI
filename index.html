@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexTech | Caos na Fábrica</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <header>
+        <h2 class="logo">NEX<span>TECH</span></h2>
+        <p>SIMULADOR INDUSTRIAL</p>
+    </header>
+
+    <main>
+        <section id="inicio" class="painel">
+            <h1>Caos na <span>Fábrica!</span></h1>
+            <p>
+                Você é responsável pelo controle de qualidade.
+                Aprove os produtos bons e rejeite os defeituosos!
+            </p>
+            <p>Você tem 90 segundos. Está preparado?</p>
+            <button id="iniciar">INICIAR TURNO</button>
+        </section>
+
+        <section id="jogo" class="painel escondido">
+            <div class="indicadores">
+                <div>
+                    <small>TEMPO</small>
+                    <h2 id="tempo">90</h2>
+                </div>
+                <div>
+                    <small>PONTOS</small>
+                    <h2 id="pontos">0</h2>
+                </div>
+                <div>
+                    <small>QUALIDADE</small>
+                    <h2 id="qualidade">100%</h2>
+                </div>
+            </div>
+
+            <h2>Linha de produção</h2>
+            <p id="mensagem">Inspecione o produto!</p>
+
+            <div id="produto" class="produto">
+                📦
+            </div>
+
+            <p id="lote">Lote número: 1</p>
+
+            <div class="botoes">
+                <button id="aprovar" class="verde">
+                    ✓ APROVAR
+                </button>
+                <button id="rejeitar" class="vermelho">
+                    ✕ REJEITAR
+                </button>
+            </div>
+
+            <p id="feedback">Observe o produto antes de decidir.</p>
+
+            <div class="estatisticas">
+                <p>Inspecionados: <strong id="inspecionados">0</strong></p>
+                <p>Acertos: <strong id="acertos">0</strong></p>
+                <p>Erros: <strong id="erros">0</strong></p>
+            </div>
+        </section>
+
+        <section id="resultado" class="painel escondido">
+            <h1>Turno encerrado!</h1>
+            <h2 id="classificacao">Operador da fábrica</h2>
+            <p>Pontuação final:</p>
+            <h1 id="pontuacaoFinal">0</h1>
+            <p id="resumo"></p>
+            <button id="jogarNovamente">JOGAR NOVAMENTE</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>NEXTECH • PRODUÇÃO • QUALIDADE • TECNOLOGIA</p>
+    </footer>
+
+</body>
+</html>
