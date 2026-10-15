@@ -1,86 +1,148 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexTech | Caos na Fábrica</title>
+    <title>NexTech - Quiz Mundo SENAI</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
 <body>
 
-    <header>
-        <h2 class="logo">NEX<span>TECH</span></h2>
-        <p>SIMULADOR INDUSTRIAL</p>
+    <header class="cabecalho">
+        <div class="logo">
+            <span class="logo-icone">N</span>
+            <div>
+                <h1>NEXTECH</h1>
+                <p>TECNOLOGIA • INOVAÇÃO • CONHECIMENTO</p>
+            </div>
+        </div>
+        <span class="evento">MUNDO SENAI</span>
     </header>
 
-    <main>
-        <section id="inicio" class="painel">
-            <h1>Caos na <span>Fábrica!</span></h1>
-            <p>
-                Você é responsável pelo controle de qualidade.
-                Aprove os produtos bons e rejeite os defeituosos!
+    <main class="container">
+
+        <section id="telaInicial" class="painel tela-inicial">
+            <div class="icone-principal">⚡</div>
+            <p class="etiqueta">DESAFIO TECNOLÓGICO</p>
+            <h2>Teste seus conhecimentos!</h2>
+            <p class="descricao">
+                Responda às perguntas, acumule pontos e conquiste seu lugar no ranking.
             </p>
-            <p>Você tem 90 segundos. Está preparado?</p>
-            <button id="iniciar">INICIAR TURNO</button>
+
+            <div class="informacoes">
+                <div class="informacao">
+                    <strong>10</strong>
+                    <span>Perguntas</span>
+                </div>
+                <div class="informacao">
+                    <strong>20s</strong>
+                    <span>Por pergunta</span>
+                </div>
+                <div class="informacao">
+                    <strong>TOP 10</strong>
+                    <span>Ranking</span>
+                </div>
+            </div>
+
+            <label for="nomeParticipante">Digite seu nome</label>
+            <input
+                type="text"
+                id="nomeParticipante"
+                placeholder="Seu nome aqui..."
+                maxlength="30"
+            >
+
+            <button id="btnIniciar" class="botao-principal">
+                INICIAR DESAFIO →
+            </button>
         </section>
 
-        <section id="jogo" class="painel escondido">
-            <div class="indicadores">
-                <div>
-                    <small>TEMPO</small>
-                    <h2 id="tempo">90</h2>
-                </div>
-                <div>
-                    <small>PONTOS</small>
-                    <h2 id="pontos">0</h2>
-                </div>
-                <div>
-                    <small>QUALIDADE</small>
-                    <h2 id="qualidade">100%</h2>
+        <section id="telaQuiz" class="painel tela-quiz oculto">
+            <div class="barra-superior">
+                <span id="categoriaPergunta" class="etiqueta">
+                    DESAFIO NEXTECH
+                </span>
+
+                <div class="cronometro-box">
+                    <span>⏱</span>
+                    <span id="cronometro">20</span>
+                    <span>s</span>
                 </div>
             </div>
 
-            <h2>Linha de produção</h2>
-            <p id="mensagem">Inspecione o produto!</p>
-
-            <div id="produto" class="produto">
-                📦
+            <div class="progresso-info">
+                <span id="numeroPergunta">Pergunta 1 de 10</span>
+                <span>Pontos: <strong id="pontuacao">0</strong></span>
             </div>
 
-            <p id="lote">Lote número: 1</p>
+            <div class="barra-progresso">
+                <div id="progresso" class="progresso"></div>
+            </div>
 
-            <div class="botoes">
-                <button id="aprovar" class="verde">
-                    ✓ APROVAR
+            <h2 id="pergunta">A pergunta aparecerá aqui</h2>
+            <div id="opcoes" class="opcoes"></div>
+            <div id="feedback" class="feedback oculto"></div>
+        </section>
+
+        <section id="telaResultado" class="painel tela-resultado oculto">
+            <div class="icone-principal">🏆</div>
+            <p class="etiqueta">DESAFIO CONCLUÍDO</p>
+            <h2>Seu resultado</h2>
+
+            <p id="resultadoMensagem" class="descricao">
+                Parabéns por participar!
+            </p>
+
+            <div class="resultado-principal">
+                <span>PONTUAÇÃO FINAL</span>
+                <strong id="resultadoPontuacao">0</strong>
+                <span>pontos</span>
+            </div>
+
+            <div class="resumo-resultados">
+                <div class="resultado-card">
+                    <strong id="resultadoAcertos">0/10</strong>
+                    <span>Acertos</span>
+                </div>
+                <div class="resultado-card">
+                    <strong id="resultadoPrecisao">0%</strong>
+                    <span>Precisão</span>
+                </div>
+            </div>
+
+            <div class="ranking-box">
+                <p class="etiqueta">🏆 HALL DA FAMA</p>
+                <h2>Ranking NexTech</h2>
+                <p class="descricao">
+                    Os melhores resultados registrados neste navegador.
+                </p>
+
+                <ol id="rankingLista" class="ranking-lista"></ol>
+
+                <button
+                    id="btnLimparRanking"
+                    class="botao-secundario"
+                    type="button"
+                >
+                    LIMPAR RANKING
                 </button>
-                <button id="rejeitar" class="vermelho">
-                    ✕ REJEITAR
-                </button>
             </div>
 
-            <p id="feedback">Observe o produto antes de decidir.</p>
-
-            <div class="estatisticas">
-                <p>Inspecionados: <strong id="inspecionados">0</strong></p>
-                <p>Acertos: <strong id="acertos">0</strong></p>
-                <p>Erros: <strong id="erros">0</strong></p>
-            </div>
+            <button
+                id="btnJogarNovamente"
+                class="botao-principal"
+                type="button"
+            >
+                JOGAR NOVAMENTE ↻
+            </button>
         </section>
 
-        <section id="resultado" class="painel escondido">
-            <h1>Turno encerrado!</h1>
-            <h2 id="classificacao">Operador da fábrica</h2>
-            <p>Pontuação final:</p>
-            <h1 id="pontuacaoFinal">0</h1>
-            <p id="resumo"></p>
-            <button id="jogarNovamente">JOGAR NOVAMENTE</button>
-        </section>
     </main>
 
-    <footer>
-        <p>NEXTECH • PRODUÇÃO • QUALIDADE • TECNOLOGIA</p>
+    <footer class="rodape">
+        <p>© 2026 NexTech — Projeto Mundo SENAI</p>
+        <p>Aprender • Criar • Inovar</p>
     </footer>
 
 </body>
