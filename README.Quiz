@@ -1,0 +1,130 @@
+# NexTech — Quiz Interativo de Tecnologia
+
+## 1. Apresentação do projeto
+
+O **NexTech** é um jogo de perguntas e respostas desenvolvido com HTML, CSS e JavaScript, com foco em tecnologia, inovação, Indústria 4.0 e profissões do futuro.
+
+O jogo foi pensado para o contexto do Mundo SENAI, oferecendo uma forma interativa de aprender e testar conhecimentos tecnológicos.
+
+O jogador precisa responder às perguntas dentro do tempo disponível para acumular pontos e alcançar uma boa posição no ranking.
+
+## 2. Como o jogo funciona
+
+O NexTech funciona em etapas:
+
+1. **Tela inicial:** o jogador informa seu nome para começar a partida.
+2. **Início do quiz:** o sistema apresenta a primeira pergunta e inicia o cronômetro.
+3. **Respostas:** o jogador seleciona uma das alternativas disponíveis.
+4. **Feedback:** o jogo informa se a resposta está correta ou incorreta e apresenta uma explicação sobre o assunto.
+5. **Pontuação:** o sistema calcula os pontos de acordo com o acerto e a rapidez da resposta.
+6. **Próxima pergunta:** após a resposta, o jogo avança para a próxima questão.
+7. **Resultado final:** quando todas as perguntas terminam, o sistema apresenta o desempenho do jogador.
+8. **Ranking:** a pontuação é registrada no navegador para permitir a comparação com resultados anteriores.
+
+## 3. Regras e sistema de pontuação
+
+- O jogo possui 10 perguntas sobre tecnologia e inovação.
+- Cada pergunta tem um limite de 20 segundos.
+- Cada resposta correta vale 500 pontos-base.
+- O jogador pode ganhar até 1.000 pontos extras por responder rapidamente.
+- Uma resposta incorreta ou uma pergunta não respondida não gera pontos.
+- O cronômetro é interrompido após a resposta, evitando que o jogador responda mais de uma vez à mesma pergunta.
+- Ao terminar o quiz, o sistema calcula os resultados da partida.
+
+A pontuação máxima possível é de **15.000 pontos**, considerando 10 respostas corretas com o bônus máximo em todas elas.
+
+## 4. Conteúdos abordados
+
+As perguntas trabalham conceitos importantes do mundo tecnológico, como:
+
+- Mundo SENAI e formação profissional;
+- Indústria 4.0;
+- Internet das Coisas (IoT);
+- Impressão 3D;
+- Robótica industrial;
+- Inteligência artificial;
+- Profissões do futuro;
+- Segurança digital;
+- Inovação;
+- Automação industrial.
+
+Esses assuntos ajudam o participante a conhecer tecnologias utilizadas na indústria e no mercado de trabalho.
+
+## 5. Funcionamento técnico
+
+O jogo utiliza três tecnologias principais.
+
+### HTML5 — Estrutura
+
+O HTML organiza os elementos da interface, como a tela inicial, o campo de nome, as perguntas, as alternativas, o cronômetro, a pontuação e a tela de resultados.
+
+### CSS3 — Aparência visual
+
+O CSS define o visual do NexTech, incluindo cores, fontes, posicionamento dos elementos, botões, feedbacks das respostas e adaptação da interface a diferentes tamanhos de tela.
+
+### JavaScript — Lógica do jogo
+
+O JavaScript controla as regras e a interação. Ele é responsável por:
+
+- Iniciar e reiniciar partidas;
+- Carregar as perguntas e suas alternativas;
+- Verificar as respostas selecionadas;
+- Controlar o tempo de cada pergunta;
+- Calcular a pontuação e os acertos;
+- Atualizar a barra de progresso;
+- Exibir explicações e resultados;
+- Registrar e apresentar o ranking.
+
+## 6. Cronômetro e controle das respostas
+
+Quando uma pergunta aparece, o cronômetro começa a contar a partir de 20 segundos.
+
+Se o jogador selecionar uma alternativa, o sistema verifica se ela corresponde à resposta correta. Em seguida, interrompe o cronômetro e apresenta o feedback.
+
+Se o tempo acabar, a pergunta é considerada não respondida e o jogo segue o fluxo previsto.
+
+Esse controle impede que uma mesma pergunta gere pontos várias vezes.
+
+## 7. Resultados e ranking
+
+Ao final da partida, o NexTech apresenta:
+
+- Pontuação total;
+- Quantidade de respostas corretas;
+- Precisão das respostas em porcentagem;
+- Mensagem de resultado;
+- Ranking com as melhores pontuações registradas.
+
+O ranking utiliza o **LocalStorage**, recurso do navegador que permite guardar dados localmente.
+
+Por isso, os resultados ficam disponíveis no mesmo navegador e dispositivo, desde que os dados armazenados não sejam apagados. O ranking não é compartilhado automaticamente pela internet.
+
+## 8. Como executar
+
+1. Salve os arquivos `index.html`, `style.css` e `script.js` na mesma pasta.
+2. Abra o arquivo `index.html` em um navegador atualizado.
+3. Digite seu nome na tela inicial.
+4. Clique em **Iniciar jogo**.
+5. Leia cada pergunta e selecione uma alternativa antes do fim do tempo.
+6. Acompanhe a pontuação e o progresso até concluir o quiz.
+7. Confira o resultado final e, se desejar, inicie outra partida.
+
+Não é necessário instalar bibliotecas ou configurar um servidor para executar a versão local do projeto.
+
+## 9. Objetivos educacionais
+
+O NexTech busca:
+
+- Incentivar o interesse por tecnologia e inovação;
+- Apresentar conceitos da indústria moderna;
+- Relacionar conhecimentos tecnológicos às profissões;
+- Desenvolver o raciocínio e a tomada de decisão;
+- Estimular a aprendizagem por meio de uma atividade interativa.
+
+## 10. Conclusão
+
+O NexTech transforma conteúdos de tecnologia em um quiz dinâmico, no qual o participante aprende, recebe feedback e acompanha seu desempenho.
+
+A combinação de HTML, CSS e JavaScript permite criar uma aplicação simples de executar, enquanto o cronômetro, a pontuação e o ranking tornam a experiência mais envolvente.
+
+**Projeto desenvolvido no contexto do Mundo SENAI.**
