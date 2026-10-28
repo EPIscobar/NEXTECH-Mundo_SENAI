@@ -1,654 +1,619 @@
+'use strict';
 
-"use strict";
+const $ = id => document.getElementById(id);
 
-const $ = (id) => document.getElementById(id);
+const themes = {
+  'Conhecimentos gerais': {
+    image: 'https://images.unsplash.com/photo-1453738773917-9c3eff1db985?auto=format&fit=crop&w=1200&q=80',
+    easy: [
+      ['Quantos dias tem uma semana?', ['5','7','10','12'], 1],
+      ['Qual cor surge ao misturar azul e amarelo?', ['Verde','Rosa','Preto','Laranja'], 0],
+      ['Quantos meses tem um ano?', ['10','11','12','13'], 2]
+    ],
+    medium: [
+      ['Quantos minutos há em duas horas?', ['60','90','120','180'], 2],
+      ['Quantos lados tem um hexágono?', ['5','6','7','8'], 1],
+      ['Qual instrumento mede a temperatura?', ['Balança','Termômetro','Régua','Bússola'], 1]
+    ],
+    hard: [
+      ['Qual é o resultado de 15²?', ['125','200','225','250'], 2],
+      ['Como se chama a passagem direta do sólido para o gasoso?', ['Condensação','Sublimação','Fusão','Solidificação'], 1],
+      ['Qual é a unidade de resistência elétrica?', ['Volt','Ampere','Ohm','Watt'], 2]
+    ]
+  },
 
-const telas = ["home", "quiz", "result"];
-const TEMPO_POR_PERGUNTA = 20;
-const TOTAL_PERGUNTAS = 10;
+  'Animais': {
+    image: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1200&q=80',
+    easy: [
+      ['Qual animal faz “miau”?', ['Cachorro','Gato','Vaca','Pato'], 1],
+      ['Qual animal tem uma tromba comprida?', ['Elefante','Leão','Macaco','Zebra'], 0],
+      ['Qual inseto produz mel?', ['Formiga','Abelha','Mosca','Joaninha'], 1]
+    ],
+    medium: [
+      ['Como se chama o animal que come plantas e outros animais?', ['Herbívoro','Carnívoro','Onívoro','Insetívoro'], 2],
+      ['Qual mamífero põe ovos?', ['Ornitorrinco','Cachorro','Golfinho','Cavalo'], 0],
+      ['Como se chama a transformação de lagarta em borboleta?', ['Migração','Metamorfose','Hibernação','Polinização'], 1]
+    ],
+    hard: [
+      ['Qual relação beneficia um organismo e prejudica o outro?', ['Mutualismo','Comensalismo','Parasitismo','Cooperação'], 2],
+      ['Qual é o nome científico da espécie humana?', ['Homo erectus','Homo habilis','Homo sapiens','Australopithecus'], 2],
+      ['Qual grupo de animais possui penas?', ['Mamíferos','Aves','Répteis','Anfíbios'], 1]
+    ]
+  },
 
-let perguntasJogo = [];
-let indice = 0;
-let pontos = 0;
-let acertos = 0;
-let tempoRestante = TEMPO_POR_PERGUNTA;
-let intervalo = null;
-let respondeu = false;
-let nomeJogador = "Jogador";
-let temaAtual = "";
-let dificuldadeAtual = "facil";
+  'Anime': {
+    image: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1200&q=80',
+    easy: [
+      ['Qual é o famoso Pokémon amarelo?', ['Charmander','Pikachu','Squirtle','Bulbasaur'], 1],
+      ['Quem sonha em ser o Rei dos Piratas em One Piece?', ['Luffy','Zoro','Sanji','Chopper'], 0],
+      ['Naruto quer se tornar o quê?', ['Rei dos Piratas','Hokage','Professor','Chef'], 1]
+    ],
+    medium: [
+      ['Em Naruto, como se chama a energia usada nas técnicas ninja?', ['Chakra','Mana azul','Cosmo','Kiara'], 0],
+      ['Qual é o navio dos Chapéus de Palha depois do Going Merry?', ['Thousand Sunny','Red Force','Polar Tang','Moby Dick'], 0],
+      ['Qual anime acompanha jovens que combatem demônios?', ['Demon Slayer','Doraemon','Haikyuu!!','Pokémon Concierge'], 0]
+    ],
+    hard: [
+      ['Qual princípio central rege a alquimia em Fullmetal Alchemist?', ['Troca equivalente','Viagem no tempo','Energia ilimitada','Telepatia'], 0],
+      ['Qual clã de Naruto é associado ao Sharingan?', ['Hyūga','Uchiha','Nara','Akimichi'], 1],
+      ['Como se chama a organização de Crocodile na saga de Alabasta?', ['Baroque Works','CP9','Germa 66','Marinha'], 0]
+    ]
+  },
 
-/*
-  Banco inicial de perguntas.
-  Cada pergunta segue o formato:
-  [pergunta, [alternativas], índice da resposta correta, explicação]
-*/
+  'Lugares do mundo': {
+    image: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=1200&q=80',
+    easy: [
+      ['Em qual país fica a Torre Eiffel?', ['Itália','França','Brasil','Japão'], 1],
+      ['Qual cidade brasileira tem o Cristo Redentor?', ['Rio de Janeiro','Lisboa','Tóquio','Londres'], 0],
+      ['Qual é a capital do Brasil?', ['Brasília','São Paulo','Salvador','Manaus'], 0]
+    ],
+    medium: [
+      ['Qual é a capital de Portugal?', ['Porto','Lisboa','Coimbra','Faro'], 1],
+      ['Em qual continente fica o Egito?', ['África','Europa','América','Oceania'], 0],
+      ['Qual país abriga Machu Picchu?', ['Peru','México','Chile','Canadá'], 0]
+    ],
+    hard: [
+      ['Qual é a capital do Butão?', ['Katmandu','Thimphu','Daca','Vientiane'], 1],
+      ['Qual estreito conecta o Mar Negro ao Mar de Mármara?', ['Gibraltar','Bósforo','Ormuz','Magalhães'], 1],
+      ['Qual país é completamente cercado pela África do Sul?', ['Lesoto','Botsuana','Namíbia','Angola'], 0]
+    ]
+  },
 
-const banco = {
-  "Conhecimentos gerais": [
-    ["Quantos dias tem uma semana?", ["5", "7", "10", "12"], 1, "Uma semana tem sete dias."],
-    ["Qual é a cor formada pela mistura de azul e amarelo?", ["Verde", "Rosa", "Preto", "Laranja"], 0, "Azul e amarelo formam verde."],
-    ["Quantas patas tem uma aranha?", ["6", "8", "10", "4"], 1, "As aranhas possuem oito patas."],
-    ["Quantos meses tem um ano?", ["10", "11", "12", "13"], 2, "Um ano tem doze meses."],
-    ["Em qual planeta vivemos?", ["Marte", "Terra", "Júpiter", "Vênus"], 1, "Nosso planeta é a Terra."],
-    ["Qual é o contrário de quente?", ["Alto", "Frio", "Rápido", "Claro"], 1, "Frio é o contrário de quente."],
-    ["Qual instrumento usamos para ver as horas?", ["Relógio", "Garfo", "Pente", "Bola"], 0, "O relógio indica as horas."],
-    ["Qual destes alimentos é uma fruta?", ["Cenoura", "Maçã", "Alface", "Batata"], 1, "A maçã é uma fruta."],
-    ["Quantos lados tem um triângulo?", ["2", "3", "4", "5"], 1, "Um triângulo tem três lados."],
-    ["Qual é o maior número: 9, 15, 12 ou 7?", ["9", "15", "12", "7"], 1, "15 é o maior desses números."]
-  ],
+  'Filmes e séries': {
+    image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1200&q=80',
+    easy: [
+      ['Em Frozen, quem tem poderes de gelo?', ['Elsa','Moana','Minnie','Dory'], 0],
+      ['Qual é o nome do cowboy de Toy Story?', ['Woody','Buzz','Nemo','Shrek'], 0],
+      ['Em O Rei Leão, qual é o nome do leão principal?', ['Simba','Dumbo','Bambi','Po'], 0]
+    ],
+    medium: [
+      ['Em Divertida Mente, qual emoção é azul?', ['Alegria','Tristeza','Raiva','Nojinho'], 1],
+      ['Qual é o nome da escola de magia de Harry Potter?', ['Hogwarts','Nárnia','Metrópolis','Arendelle'], 0],
+      ['Qual herói usa o martelo Mjölnir?', ['Thor','Hulk','Pantera Negra','Homem-Formiga'], 0]
+    ],
+    hard: [
+      ['Quem dirigiu o filme A Origem?', ['Denis Villeneuve','Christopher Nolan','David Fincher','James Cameron'], 1],
+      ['Em Star Wars, qual é o planeta natal de Chewbacca?', ['Tatooine','Kashyyyk','Naboo','Endor'], 1],
+      ['Qual filme sul-coreano venceu o Oscar de Melhor Filme em 2020?', ['Oldboy','Parasita','Minari','A Criada'], 1]
+    ]
+  },
 
-  "Animais": [
-    ["Qual animal faz 'miau'?", ["Cachorro", "Gato", "Vaca", "Pato"], 1, "O miado é característico dos gatos."],
-    ["Qual animal tem uma tromba comprida?", ["Elefante", "Leão", "Macaco", "Zebra"], 0, "O elefante possui uma tromba."],
-    ["Qual destes mamíferos vive no mar?", ["Golfinho", "Galinha", "Cavalo", "Gato"], 0, "O golfinho é um mamífero aquático."],
-    ["Qual inseto produz mel?", ["Formiga", "Abelha", "Mosca", "Joaninha"], 1, "As abelhas produzem mel."],
-    ["Qual animal tem listras pretas e brancas?", ["Zebra", "Girafa", "Urso", "Ovelha"], 0, "As listras são características das zebras."],
-    ["Qual animal carrega o filhote em uma bolsa?", ["Canguru", "Pinguim", "Lobo", "Porco"], 0, "O canguru é um marsupial."],
-    ["Qual é o maior animal do planeta?", ["Elefante africano", "Baleia-azul", "Girafa", "Tubarão-branco"], 1, "A baleia-azul é o maior animal conhecido."],
-    ["Qual destes animais é um anfíbio?", ["Sapo", "Gato", "Águia", "Cavalo"], 0, "Os sapos são anfíbios."],
-    ["Qual animal é conhecido por mudar de cor?", ["Camaleão", "Coelho", "Panda", "Cavalo"], 0, "Camaleões podem alterar sua coloração."],
-    ["Como se chama o estudo dos animais?", ["Botânica", "Zoologia", "Geologia", "Astronomia"], 1, "A zoologia estuda os animais."]
-  ],
+  'Tecnologia': {
+    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80',
+    easy: [
+      ['Qual aparelho usamos para fazer ligações?', ['Celular','Geladeira','Micro-ondas','Ventilador'], 0],
+      ['Qual peça usamos para digitar?', ['Teclado','Monitor','Caixa de som','Impressora'], 0],
+      ['O que conecta aparelhos à internet sem fio?', ['Wi-Fi','Lanterna','Bússola','Cronômetro'], 0]
+    ],
+    medium: [
+      ['O que significa CPU?', ['Unidade Central de Processamento','Controle Principal de Usuário','Central de Programas Úteis','Código Pessoal Universal'], 0],
+      ['Para que serve um backup?', ['Criar uma cópia de segurança','Aumentar o brilho','Apagar todos os arquivos','Melhorar o Wi-Fi sempre'], 0],
+      ['O que é phishing?', ['Tentativa de enganar alguém para obter dados','Compactação de vídeo','Um cabo de rede','Limpeza da tela'], 0]
+    ],
+    hard: [
+      ['Qual estrutura de dados segue o princípio LIFO?', ['Fila','Pilha','Árvore','Grafo'], 1],
+      ['Em redes, o que significa DNS?', ['Data Network System','Domain Name System','Digital Node Service','Distributed Number Standard'], 1],
+      ['Qual tecnologia estrutura páginas web, mas não é linguagem de programação?', ['JavaScript','Python','HTML','C++'], 2]
+    ]
+  },
 
-  "Anime": [
-    ["Qual Pokémon é amarelo e famoso por seus ataques elétricos?", ["Charmander", "Pikachu", "Squirtle", "Bulbasaur"], 1, "Pikachu é conhecido por seus poderes elétricos."],
-    ["Quem é o protagonista de Dragon Ball?", ["Goku", "Luffy", "Naruto", "Tanjiro"], 0, "Goku é o protagonista de Dragon Ball."],
-    ["O que Naruto deseja se tornar?", ["Rei dos Piratas", "Hokage", "Cientista", "Chef"], 1, "Naruto sonha em se tornar Hokage."],
-    ["Quem sonha em encontrar o One Piece?", ["Zoro", "Sanji", "Monkey D. Luffy", "Chopper"], 2, "Luffy busca o tesouro One Piece."],
-    ["Qual destes animes apresenta caçadores de demônios?", ["Demon Slayer", "Pokémon", "Haikyuu!!", "Dr. Stone"], 0, "Demon Slayer acompanha caçadores de demônios."],
-    ["Qual é o nome do caderno usado em Death Note?", ["Life Book", "Death Note", "Dark File", "Soul Paper"], 1, "O caderno central da história é o Death Note."],
-    ["Em Pokémon, qual tipo é super efetivo contra Água?", ["Elétrico", "Normal", "Fantasma", "Pedra"], 0, "Ataques elétricos são fortes contra Pokémon de Água."],
-    ["Qual personagem usa três espadas em One Piece?", ["Zoro", "Usopp", "Nami", "Franky"], 0, "Roronoa Zoro utiliza o estilo de três espadas."],
-    ["Qual é o nome do protagonista de My Hero Academia?", ["Izuku Midoriya", "Eren Yeager", "Light Yagami", "Saitama"], 0, "Izuku Midoriya é o protagonista da série."],
-    ["Qual anime acompanha partidas de vôlei?", ["Haikyuu!!", "One Piece", "Bleach", "Spy x Family"], 0, "Haikyuu!! é centrado no vôlei."]
-  ],
+  'Esportes': {
+    image: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=80',
+    easy: [
+      ['Em qual esporte usamos uma bola e uma cesta?', ['Basquete','Natação','Tênis','Ginástica'], 0],
+      ['Em qual esporte nadamos numa piscina?', ['Natação','Ciclismo','Judô','Vôlei'], 0],
+      ['Qual equipamento protege a cabeça ao andar de bicicleta?', ['Capacete','Chinelo','Cachecol','Luvas'], 0]
+    ],
+    medium: [
+      ['Qual modalidade combina natação, ciclismo e corrida?', ['Triatlo','Pentatlo','Decatlo','Biatlo'], 0],
+      ['No vôlei, qual fundamento inicia cada ponto?', ['Saque','Bloqueio','Levantamento','Manchete'], 0],
+      ['Em uma corrida de revezamento, o que os atletas passam?', ['Bastão','Raquete','Disco','Capacete'], 0]
+    ],
+    hard: [
+      ['Qual é a distância oficial de uma maratona?', ['40 km','42,195 km','45 km','50 km'], 1],
+      ['Qual país sediou a Copa do Mundo masculina de futebol de 2010?', ['Alemanha','África do Sul','Brasil','México'], 1],
+      ['No vôlei de quadra, quantos toques uma equipe pode dar antes de devolver a bola, sem contar o bloqueio?', ['2','3','4','5'], 1]
+    ]
+  },
 
-  "Lugares do mundo": [
-    ["Em qual país fica a Torre Eiffel?", ["Itália", "França", "Brasil", "Japão"], 1, "A Torre Eiffel fica em Paris, na França."],
-    ["Qual cidade brasileira abriga o Cristo Redentor?", ["Rio de Janeiro", "Lisboa", "Tóquio", "Londres"], 0, "O monumento fica no Rio de Janeiro."],
-    ["Em qual país ficam as pirâmides de Gizé?", ["Egito", "Canadá", "Chile", "Portugal"], 0, "As pirâmides de Gizé ficam no Egito."],
-    ["Qual país tem formato frequentemente comparado a uma bota?", ["Itália", "México", "Japão", "Índia"], 0, "O formato da Itália lembra uma bota."],
-    ["Em qual cidade fica o Big Ben?", ["Londres", "Paris", "Roma", "Madri"], 0, "O Big Ben fica em Londres."],
-    ["Qual é o maior oceano do planeta?", ["Pacífico", "Atlântico", "Índico", "Ártico"], 0, "O Oceano Pacífico é o maior."],
-    ["Qual é a capital do Japão?", ["Seul", "Pequim", "Tóquio", "Bangkok"], 2, "A capital japonesa é Tóquio."],
-    ["Em qual continente fica o Egito?", ["Europa", "África", "Oceania", "América do Sul"], 1, "O Egito fica principalmente na África."],
-    ["Qual é a capital do Brasil?", ["Brasília", "São Paulo", "Salvador", "Manaus"], 0, "Brasília é a capital brasileira."],
-    ["Em qual país fica a Estátua da Liberdade?", ["Estados Unidos", "Argentina", "Espanha", "Índia"], 0, "O monumento fica em Nova York, nos Estados Unidos."]
-  ],
+  'História': {
+    image: 'https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=1200&q=80',
+    easy: [
+      ['Qual data marca a Independência do Brasil?', ['7 de setembro','25 de dezembro','1º de maio','12 de outubro'], 0],
+      ['Quem foi o primeiro imperador do Brasil?', ['Dom Pedro I','Dom Pedro II','Tiradentes','Santos Dumont'], 0],
+      ['Em que ano o Brasil declarou sua independência?', ['1822','1500','1888','2000'], 0]
+    ],
+    medium: [
+      ['Qual invenção é associada a Johannes Gutenberg?', ['Imprensa de tipos móveis','Telefone','Lâmpada elétrica','Avião'], 0],
+      ['Qual povo antigo construiu as pirâmides de Gizé?', ['Egípcios','Vikings','Romanos','Astecas'], 0],
+      ['Qual movimento brasileiro lutou pela abolição da escravidão?', ['Abolicionismo','Cruzadas','Mercantilismo','Absolutismo'], 0]
+    ],
+    hard: [
+      ['Qual tratado dividiu territórios ultramarinos entre Portugal e Espanha em 1494?', ['Versalhes','Tordesilhas','Utrecht','Paris'], 1],
+      ['Qual revolução começou em 1789 na França?', ['Gloriosa','Francesa','Industrial','Russa'], 1],
+      ['Em que ano ocorreu a Revolução Russa que levou os bolcheviques ao poder?', ['1905','1914','1917','1922'], 2]
+    ]
+  },
 
-  "Filmes e séries": [
-    ["Em Frozen, quem tem poderes de gelo?", ["Elsa", "Moana", "Minnie", "Dory"], 0, "Elsa possui poderes relacionados ao gelo."],
-    ["Qual é o nome do cowboy de Toy Story?", ["Woody", "Buzz", "Nemo", "Shrek"], 0, "Woody é o cowboy de Toy Story."],
-    ["Qual é a identidade secreta do Homem-Aranha?", ["Peter Parker", "Bruce Wayne", "Clark Kent", "Tony Stark"], 0, "Peter Parker é uma das versões mais conhecidas do herói."],
-    ["Que animal é Nemo?", ["Peixe-palhaço", "Tubarão", "Tartaruga", "Polvo"], 0, "Nemo é um peixe-palhaço."],
-    ["Qual personagem verde vive em um pântano?", ["Shrek", "Woody", "Olaf", "Simba"], 0, "Shrek é um ogro que vive em um pântano."],
-    ["Qual é o nome do leão protagonista de O Rei Leão?", ["Simba", "Dumbo", "Bambi", "Po"], 0, "Simba é o protagonista de O Rei Leão."],
-    ["Qual herói usa um escudo com uma estrela?", ["Capitão América", "Homem de Ferro", "Hulk", "Thor"], 0, "O escudo é um dos símbolos do Capitão América."],
-    ["Qual personagem de desenho adora lasanha?", ["Garfield", "Mickey", "Pato Donald", "Pernalonga"], 0, "Garfield é famoso por gostar de lasanha."],
-    ["Como são chamados os ajudantes amarelos de Meu Malvado Favorito?", ["Minions", "Smurfs", "Gremlins", "Pokémons"], 0, "Os ajudantes amarelos são os Minions."],
-    ["Qual princesa tem cabelo mágico muito comprido?", ["Rapunzel", "Cinderela", "Tiana", "Mulan"], 0, "Rapunzel é conhecida por seus cabelos compridos."]
-  ],
+  'Geografia': {
+    image: 'https://images.unsplash.com/photo-1524666041070-9b876761f9a3?auto=format&fit=crop&w=1200&q=80',
+    easy: [
+      ['Em qual continente fica o Brasil?', ['América do Sul','Europa','África','Ásia'], 0],
+      ['Qual é a capital do Brasil?', ['Brasília','Curitiba','Rio de Janeiro','Recife'], 0],
+      ['Qual é o maior oceano da Terra?', ['Pacífico','Atlântico','Índico','Ártico'], 0]
+    ],
+    medium: [
+      ['Qual região brasileira abriga o estado do Paraná?', ['Sul','Norte','Nordeste','Centro-Oeste'], 0],
+      ['Como se chama a representação reduzida da superfície terrestre?', ['Mapa','Termograma','Cronologia','Sonograma'], 0],
+      ['Qual país fica na América do Sul?', ['Argentina','Japão','França','Egito'], 0]
+    ],
+    hard: [
+      ['Qual corrente oceânica fria influencia o litoral do Peru e do Chile?', ['Corrente do Golfo','Corrente de Humboldt','Kuroshio','Corrente das Agulhas'], 1],
+      ['Qual é o ponto mais alto da África?', ['Monte Quênia','Kilimanjaro','Monte Stanley','Monte Elgon'], 1],
+      ['Qual país administra a Groenlândia como território autônomo?', ['Noruega','Dinamarca','Canadá','Islândia'], 1]
+    ]
+  },
 
-  "Tecnologia": [
-    ["Qual aparelho usamos para fazer ligações e mandar mensagens?", ["Celular", "Geladeira", "Micro-ondas", "Ventilador"], 0, "O celular permite comunicação e muitas outras funções."],
-    ["Qual dispositivo usamos para movimentar o cursor do computador?", ["Mouse", "Colher", "Régua", "Escova"], 0, "O mouse controla o cursor."],
-    ["Qual aparelho é usado para tirar fotos?", ["Câmera", "Liquidificador", "Impressora", "Ferro de passar"], 0, "Câmeras registram imagens."],
-    ["Para que serve uma senha?", ["Proteger uma conta", "Pintar a tela", "Aumentar o volume", "Carregar a bateria"], 0, "Senhas ajudam a proteger o acesso às contas."],
-    ["Qual destes é um navegador de internet?", ["Chrome", "Calculadora", "Bloco de notas", "Câmera"], 0, "Chrome é um navegador de internet."],
-    ["Qual peça usamos para digitar no computador?", ["Teclado", "Monitor", "Caixa de som", "Impressora"], 0, "O teclado permite inserir texto e comandos."],
-    ["O que permite conectar aparelhos à internet sem fio?", ["Wi-Fi", "Lanterna", "Bússola", "Cronômetro"], 0, "Wi-Fi permite conexões de rede sem fio."],
-    ["O que é inteligência artificial?", ["Tecnologia capaz de realizar tarefas que exigem capacidades inteligentes", "Um tipo de bateria", "Um cabo de vídeo", "Um sistema de pintura manual"], 0, "A IA permite que sistemas executem tarefas como reconhecer padrões."],
-    ["O que é computação em nuvem?", ["Uso de recursos computacionais pela internet", "Guardar arquivos somente em papel", "Desligar todos os servidores", "Um tipo de teclado"], 0, "A nuvem oferece armazenamento e processamento por meio da internet."],
-    ["Qual prática ajuda a evitar golpes digitais?", ["Verificar links e remetentes", "Compartilhar senhas", "Usar a mesma senha em tudo", "Abrir anexos desconhecidos"], 0, "Verificar links e remetentes ajuda a identificar tentativas de golpe."]
-  ],
+  'Natureza': {
+    image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80',
+    easy: [
+      ['O que as plantas precisam para crescer?', ['Água e luz','Refrigerante','Plástico','Brinquedos'], 0],
+      ['A água congelada vira o quê?', ['Gelo','Vapor quente','Areia','Óleo'], 0],
+      ['Qual astro ilumina a Terra durante o dia?', ['Sol','Lua','Marte','Cometa'], 0]
+    ],
+    medium: [
+      ['Qual parte da planta geralmente fica debaixo da terra?', ['Raiz','Flor','Fruto','Folha'], 0],
+      ['Qual animal ajuda a polinizar flores?', ['Abelha','Tubarão','Pinguim','Golfinho'], 0],
+      ['O que devemos fazer com lixo reciclável?', ['Separar para reciclagem','Jogar no rio','Deixar na rua','Queimar sempre'], 0]
+    ],
+    hard: [
+      ['Qual processo transforma nitrogênio atmosférico em compostos utilizáveis pelos ecossistemas?', ['Fixação do nitrogênio','Transpiração','Fermentação','Combustão'], 0],
+      ['Qual gás contribui para o efeito estufa natural e varia bastante na atmosfera?', ['Oxigênio','Vapor de água','Hélio','Hidrogênio'], 1],
+      ['Como se chama o crescimento excessivo de algas causado por excesso de nutrientes na água?', ['Eutrofização','Desertificação','Inversão térmica','Salinização'], 0]
+    ]
+  },
 
-  "Esportes": [
-    ["Quantos gols vale um gol comum no futebol?", ["1", "2", "3", "5"], 0, "Um gol comum conta como um gol."],
-    ["Em qual esporte usamos uma bola e uma cesta?", ["Basquete", "Natação", "Tênis", "Ginástica"], 0, "O objetivo do basquete inclui acertar a bola na cesta."],
-    ["Em qual esporte os atletas nadam em uma piscina?", ["Natação", "Ciclismo", "Judô", "Vôlei"], 0, "A natação é praticada na água."],
-    ["Qual esporte usa uma rede e as mãos para passar a bola?", ["Vôlei", "Golfe", "Xadrez", "Surfe"], 0, "No vôlei, os jogadores passam a bola por cima da rede."],
-    ["Qual esporte é praticado com bicicleta?", ["Ciclismo", "Boxe", "Natação", "Handebol"], 0, "O ciclismo envolve provas com bicicletas."],
-    ["Qual equipamento é usado no tênis para rebater a bola?", ["Raquete", "Colher", "Régua", "Bastão de selfie"], 0, "Os jogadores utilizam raquetes."],
-    ["Qual esporte acontece sobre as ondas do mar?", ["Surfe", "Xadrez", "Ginástica", "Corrida de pista"], 0, "O surfe é praticado sobre ondas."],
-    ["Qual equipamento ajuda a proteger a cabeça ao andar de bicicleta?", ["Capacete", "Chinelo", "Cachecol", "Pulseira"], 0, "O capacete ajuda a proteger a cabeça."],
-    ["Quantos jogadores de cada equipe ficam em campo no futebol tradicional?", ["7", "9", "11", "13"], 2, "Cada equipe começa com onze jogadores."],
-    ["Em qual esporte se utiliza um kimono e técnicas de projeção?", ["Judô", "Natação", "Tênis", "Ciclismo"], 0, "O judô utiliza técnicas de projeção e imobilização."]
-  ],
+  'Jogos': {
+    image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80',
+    easy: [
+      ['Qual jogo permite construir casas com blocos?', ['Minecraft','FIFA','Uno','Paciência'], 0],
+      ['Em Mario Kart, os personagens competem em quê?', ['Corridas de kart','Xadrez','Natação','Cozinha'], 0],
+      ['Qual personagem da Nintendo usa boné vermelho e bigode?', ['Mario','Sonic','Pikachu','Kirby'], 0]
+    ],
+    medium: [
+      ['O que geralmente significa “pause” em um jogo?', ['Pausar o jogo','Ganhar automaticamente','Apagar o aparelho','Mudar sempre o idioma'], 0],
+      ['No xadrez, qual peça costuma ter uma cruz no topo?', ['Rei','Cavalo','Peão','Torre'], 0],
+      ['Qual jogo usa peças com números e pontinhos?', ['Dominó','Jenga','Esconde-esconde','Pular corda'], 0]
+    ],
+    hard: [
+      ['No xadrez, como se chama a situação sem xeque em que não há lance legal?', ['Roque','Afogamento','En passant','Gambito'], 1],
+      ['Em jogos, o que significa “nerfar” um personagem?', ['Aumentar seu poder','Reduzir sua eficácia','Removê-lo','Liberar uma skin'], 1],
+      ['Qual estúdio criou a série Dark Souls?', ['Valve','FromSoftware','Naughty Dog','CD Projekt Red'], 1]
+    ]
+  },
 
-  "História": [
-    ["Em que data se comemora a Independência do Brasil?", ["7 de setembro", "25 de dezembro", "1º de maio", "12 de outubro"], 0, "A Independência do Brasil é comemorada em 7 de setembro."],
-    ["Quem foi o primeiro imperador do Brasil?", ["Dom Pedro I", "Dom Pedro II", "Tiradentes", "Santos Dumont"], 0, "Dom Pedro I foi o primeiro imperador brasileiro."],
-    ["Qual povo antigo construiu as pirâmides de Gizé?", ["Egípcios", "Vikings", "Romanos", "Astecas"], 0, "As pirâmides de Gizé foram construídas no Egito antigo."],
-    ["Em que ano ocorreu a Independência do Brasil?", ["1822", "1500", "1888", "2000"], 0, "A Independência foi proclamada em 1822."],
-    ["Em que ano foi assinada a Lei Áurea?", ["1822", "1888", "1930", "1964"], 1, "A Lei Áurea foi assinada em 1888."],
-    ["Qual civilização antiga ficou conhecida pela democracia em Atenas?", ["Grega", "Asteca", "Inca", "Mongol"], 0, "A democracia ateniense surgiu na Grécia antiga."],
-    ["Qual foi o principal meio de transporte nas grandes navegações?", ["Navios", "Aviões", "Trens-bala", "Automóveis"], 0, "As viagens oceânicas eram feitas por navios."],
-    ["Quem ficou conhecido por desenvolver o avião no Brasil?", ["Santos Dumont", "Pelé", "Monteiro Lobato", "Cândido Portinari"], 0, "Santos Dumont foi um pioneiro da aviação."],
-    ["Qual monumento antigo fica em Roma?", ["Coliseu", "Torre Eiffel", "Cristo Redentor", "Big Ben"], 0, "O Coliseu é um monumento romano."],
-    ["Qual acontecimento começou em 1914 e terminou em 1918?", ["Primeira Guerra Mundial", "Segunda Guerra Mundial", "Revolução Francesa", "Guerra Fria"], 0, "A Primeira Guerra Mundial ocorreu de 1914 a 1918."]
-  ],
-
-  "Geografia": [
-    ["Qual é o maior continente em área?", ["Ásia", "Europa", "Oceania", "Antártida"], 0, "A Ásia é o maior continente em área."],
-    ["Qual linha imaginária divide a Terra em hemisférios Norte e Sul?", ["Equador", "Meridiano de Greenwich", "Trópico de Câncer", "Círculo Polar Ártico"], 0, "A Linha do Equador separa os hemisférios Norte e Sul."],
-    ["Qual é o maior oceano?", ["Pacífico", "Atlântico", "Índico", "Ártico"], 0, "O Pacífico é o maior oceano."],
-    ["Qual é a capital da Argentina?", ["Buenos Aires", "Lima", "Santiago", "Montevidéu"], 0, "Buenos Aires é a capital argentina."],
-    ["Qual bioma ocupa grande parte do norte do Brasil?", ["Amazônia", "Pampa", "Caatinga", "Pantanal"], 0, "A Amazônia ocupa uma grande área do norte brasileiro."],
-    ["O que representa a escala de um mapa?", ["Relação entre distância no mapa e distância real", "Temperatura do local", "Quantidade de habitantes", "Velocidade do vento"], 0, "A escala relaciona medidas do mapa com medidas reais."],
-    ["Qual é o maior país do mundo em área territorial?", ["Rússia", "Canadá", "China", "Brasil"], 0, "A Rússia é o maior país em área."],
-    ["Qual é a capital de Portugal?", ["Lisboa", "Porto", "Madrid", "Roma"], 0, "Lisboa é a capital portuguesa."],
-    ["Qual fenômeno está relacionado ao movimento das placas tectônicas?", ["Terremotos", "Eclipses", "Auroras", "Marés diárias"], 0, "O movimento das placas pode provocar terremotos."],
-    ["Qual é o ponto cardeal oposto ao norte?", ["Sul", "Leste", "Oeste", "Nordeste"], 0, "Sul é o oposto de norte."]
-  ],
-
-  "Natureza": [
-    ["Qual gás as plantas absorvem durante a fotossíntese?", ["Dióxido de carbono", "Hélio", "Hidrogênio", "Neônio"], 0, "As plantas utilizam dióxido de carbono na fotossíntese."],
-    ["Qual é a principal fonte de energia da Terra?", ["Sol", "Lua", "Marte", "Vulcões"], 0, "O Sol fornece a maior parte da energia que sustenta a vida na Terra."],
-    ["Como se chama a transformação da água líquida em vapor?", ["Evaporação", "Congelamento", "Condensação", "Solidificação"], 0, "A evaporação transforma água líquida em vapor."],
-    ["Qual destes materiais costuma ser reciclável?", ["Papel", "Restos de comida misturados com óleo", "Fumaça", "Água suja sem tratamento"], 0, "Papel limpo pode ser encaminhado à reciclagem."],
-    ["Qual é uma função importante das árvores?", ["Absorver CO₂ e oferecer habitat", "Produzir plástico", "Eliminar toda a chuva", "Impedir a fotossíntese"], 0, "Árvores armazenam carbono e fornecem abrigo para muitas espécies."],
-    ["Qual camada protege a Terra de grande parte da radiação ultravioleta?", ["Camada de ozônio", "Núcleo interno", "Crosta terrestre", "Manto"], 0, "A camada de ozônio absorve boa parte da radiação UV."],
-    ["Qual é o estado da água em forma de gelo?", ["Sólido", "Líquido", "Gasoso", "Plasma"], 0, "O gelo é água no estado sólido."],
-    ["O que é biodiversidade?", ["Variedade de seres vivos", "Quantidade de prédios", "Velocidade dos rios", "Temperatura média"], 0, "Biodiversidade é a variedade de vida em uma região ou no planeta."],
-    ["Qual atitude ajuda a economizar água?", ["Fechar a torneira ao escovar os dentes", "Deixar a torneira aberta", "Lavar calçadas diariamente com mangueira", "Ignorar vazamentos"], 0, "Fechar a torneira evita desperdício de água."],
-    ["Como se chama a passagem de vapor de água para líquido?", ["Condensação", "Evaporação", "Fusão", "Sublimação"], 0, "Na condensação, o vapor forma água líquida."]
-  ],
-
-  "Jogos": [
-    ["Em Minecraft, qual material é necessário para criar ferramentas de madeira?", ["Madeira", "Areia", "Lã", "Gelo"], 0, "A madeira pode ser transformada em tábuas para fabricar ferramentas."],
-    ["Qual é o objetivo principal do xadrez?", ["Dar xeque-mate", "Capturar todas as peças", "Chegar à última fileira", "Ficar sem peões"], 0, "O objetivo é colocar o rei adversário em xeque-mate."],
-    ["Qual empresa desenvolveu Mario e Zelda?", ["Nintendo", "Microsoft", "Adobe", "Nokia"], 0, "As franquias Mario e Zelda são da Nintendo."],
-    ["Em jogos, o que geralmente significa NPC?", ["Personagem não controlado pelo jogador", "Novo pacote de cores", "Nível principal completo", "Controle de rede"], 0, "NPC é um personagem controlado pelo próprio jogo."],
-    ["Qual gênero de jogo costuma envolver saltos e obstáculos?", ["Plataforma", "Simulador de planilhas", "Editor de texto", "Calculadora"], 0, "Jogos de plataforma costumam envolver saltos e obstáculos."],
-    ["Qual destes é um jogo de construção em blocos?", ["Minecraft", "FIFA", "Tetris", "Pac-Man"], 0, "Minecraft permite construir estruturas usando blocos."],
-    ["Em jogos, o que costuma indicar uma barra de vida?", ["Saúde do personagem", "Volume da música", "Velocidade da internet", "Tamanho da tela"], 0, "A barra de vida representa a saúde ou resistência do personagem."],
-    ["Qual jogo é conhecido por empilhar peças que caem?", ["Tetris", "The Sims", "Rocket League", "Animal Crossing"], 0, "Em Tetris, o jogador organiza peças que caem."],
-    ["O que significa jogar em modo multijogador?", ["Jogar com ou contra outras pessoas", "Jogar sem regras", "Desligar o controle", "Jogar sem tela"], 0, "O modo multijogador permite a participação de várias pessoas."],
-    ["Qual prática é importante para jogar online com segurança?", ["Não compartilhar dados pessoais", "Publicar senhas", "Aceitar todos os pedidos", "Baixar arquivos desconhecidos"], 0, "Evitar compartilhar dados pessoais ajuda a proteger a privacidade."]
-  ],
-
-  "Corpo humano": [
-    ["Qual órgão bombeia o sangue?", ["Coração", "Pulmão", "Estômago", "Rim"], 0, "O coração bombeia o sangue pelo corpo."],
-    ["Qual órgão é responsável por grande parte das trocas gasosas?", ["Pulmões", "Fígado", "Bexiga", "Pâncreas"], 0, "Nos pulmões, ocorre a troca de oxigênio e dióxido de carbono."],
-    ["Qual sistema realiza a digestão dos alimentos?", ["Sistema digestório", "Sistema nervoso", "Sistema esquelético", "Sistema tegumentar"], 0, "O sistema digestório processa os alimentos e absorve nutrientes."],
-    ["Qual órgão controla muitas funções do corpo e processa informações?", ["Cérebro", "Estômago", "Baço", "Bexiga"], 0, "O cérebro coordena muitas funções do organismo."],
-    ["Qual é a função principal dos glóbulos vermelhos?", ["Transportar oxigênio", "Produzir bile", "Digestionar gordura", "Formar urina"], 0, "Os glóbulos vermelhos transportam oxigênio usando hemoglobina."],
-    ["Onde ocorre a maior parte da absorção dos nutrientes?", ["Intestino delgado", "Esôfago", "Boca", "Traqueia"], 0, "O intestino delgado absorve a maior parte dos nutrientes."],
-    ["Qual estrutura protege o cérebro?", ["Crânio", "Fêmur", "Costela", "Pelve"], 0, "O crânio protege o cérebro."],
-    ["Qual órgão filtra o sangue e ajuda a produzir urina?", ["Rim", "Coração", "Pulmão", "Estômago"], 0, "Os rins filtram o sangue e participam da formação da urina."],
-    ["Qual sistema permite perceber estímulos e coordenar respostas?", ["Sistema nervoso", "Sistema digestório", "Sistema muscular apenas", "Sistema urinário"], 0, "O sistema nervoso recebe informações e coordena respostas."],
-    ["Qual nutriente é uma importante fonte de energia para o corpo?", ["Carboidratos", "Vitaminas apenas", "Água", "Sais minerais apenas"], 0, "Carboidratos são uma fonte importante de energia."]
-  ],
-
-  "Microsoft Teams": [
-    ["Para que serve o Microsoft Teams?", ["Comunicação e colaboração", "Editar somente imagens", "Substituir o sistema operacional", "Limpar o teclado"], 0, "O Teams reúne conversas, reuniões e colaboração."],
-    ["Qual recurso permite conversar por vídeo no Teams?", ["Reunião", "Lixeira", "Calculadora", "Papel de parede"], 0, "As reuniões permitem chamadas de áudio e vídeo."],
-    ["Onde normalmente aparecem mensagens enviadas em um canal?", ["Na conversa do canal", "Na área de trabalho do Windows", "No BIOS", "No gerenciador de impressão"], 0, "As mensagens do canal aparecem na conversa correspondente."],
-    ["Qual cuidado é importante ao compartilhar um arquivo?", ["Conferir as permissões de acesso", "Compartilhar com qualquer pessoa sem verificar", "Enviar senhas no arquivo", "Ignorar a privacidade"], 0, "É importante verificar quem pode abrir ou editar o arquivo."],
-    ["O que pode ser usado para organizar uma reunião?", ["Calendário", "Calculadora", "Paint", "Bloco de notas apenas"], 0, "O calendário ajuda a agendar reuniões."],
-    ["O que significa silenciar o microfone?", ["Desativar temporariamente a transmissão de áudio", "Desligar a internet", "Apagar a reunião", "Sair da conta"], 0, "O microfone deixa de transmitir o áudio do participante."],
-    ["Para que servem as equipes no Teams?", ["Agrupar pessoas e canais por assunto", "Aumentar a memória RAM", "Formatar o computador", "Editar o sistema operacional"], 0, "Equipes ajudam a organizar a colaboração por grupos."],
-    ["Qual atitude demonstra respeito em uma reunião online?", ["Esperar sua vez de falar", "Interromper todos", "Compartilhar a tela sem necessidade", "Deixar o microfone aberto com ruídos"], 0, "Respeitar os turnos de fala melhora a reunião."],
-    ["O que é possível compartilhar durante uma reunião?", ["Tela ou janela", "Somente senhas", "Somente o teclado físico", "A bateria do computador"], 0, "O compartilhamento permite mostrar uma tela ou janela."],
-    ["Qual prática protege uma conta do Teams?", ["Usar senha forte e autenticação multifator quando disponível", "Compartilhar a senha", "Usar senhas óbvias", "Deixar a conta aberta em computadores públicos"], 0, "Senhas fortes e autenticação adicional aumentam a segurança."]
-  ]
+  'Corpo humano': {
+    image: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=1200&q=80',
+    easy: [
+      ['Com qual parte do corpo enxergamos?', ['Olhos','Orelhas','Joelhos','Cotovelos'], 0],
+      ['Qual órgão bombeia o sangue?', ['Coração','Estômago','Cérebro','Pulmão'], 0],
+      ['Com qual parte do corpo sentimos cheiros?', ['Nariz','Joelho','Cotovelos','Calcanhar'], 0]
+    ],
+    medium: [
+      ['Qual é a função principal dos pulmões?', ['Realizar trocas gasosas','Produzir bile','Filtrar urina','Armazenar cálcio'], 0],
+      ['Qual sistema coordena respostas por meio de sinais nervosos?', ['Sistema nervoso','Sistema digestório','Sistema urinário','Sistema tegumentar'], 0],
+      ['Qual nutriente é uma importante fonte de energia?', ['Carboidratos','Somente água','Sais minerais apenas','Oxigênio como alimento'], 0]
+    ],
+    hard: [
+      ['Qual estrutura celular produz a maior parte do ATP nas células eucarióticas?', ['Ribossomo','Mitocôndria','Lisossomo','Complexo de Golgi'], 1],
+      ['Qual parte do encéfalo participa do equilíbrio e da coordenação motora?', ['Cerebelo','Hipotálamo','Bulbo olfatório','Hipófise'], 0],
+      ['Qual molécula armazena a maior parte da informação genética?', ['ATP','DNA','Colágeno','Hemoglobina'], 1]
+    ]
+  }
 };
 
-const imagens = {
-  "Conhecimentos gerais": "https://images.unsplash.com/photo-1453738773917-9c3eff1db985?auto=format&fit=crop&w=1000&q=80",
-  "Animais": "https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=1000&q=80",
-  "Anime": "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1000&q=80",
-  "Lugares do mundo": "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=1000&q=80",
-  "Filmes e séries": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1000&q=80",
-  "Tecnologia": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=80",
-  "Esportes": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1000&q=80",
-  "História": "https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=1000&q=80",
-  "Geografia": "https://images.unsplash.com/photo-1524666041070-9fc2b2f4e9e4?auto=format&fit=crop&w=1000&q=80",
-  "Natureza": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1000&q=80",
-  "Jogos": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=80",
-  "Corpo humano": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1000&q=80",
-  "Microsoft Teams": "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1000&q=80"
+const difficultyNames = {
+  facil: 'FÁCIL',
+  medio: 'MÉDIO',
+  dificil: 'DIFÍCIL'
 };
 
-const nomesDificuldade = {
-  facil: "Fácil",
-  medio: "Médio",
-  dificil: "Difícil"
+const difficultyHelpText = {
+  facil: 'Perguntas básicas para começar.',
+  medio: 'Perguntas intermediárias para testar seus conhecimentos.',
+  dificil: 'Perguntas avançadas para um desafio maior.'
 };
 
-const ajudaDificuldade = {
-  facil: "Perguntas básicas para começar e ganhar confiança.",
-  medio: "Perguntas que exigem mais atenção e conhecimento.",
-  dificil: "Desafios para testar seus conhecimentos."
-};
+const RANK_KEY = 'nextech-quiz-ranking-v2';
+const THEME_KEY = 'nextech-quiz-theme-v2';
+const SOUND_KEY = 'nextech-quiz-sound-v2';
 
-function mostrarTela(id) {
-  telas.forEach((tela) => {
-    const elemento = $(tela);
-    if (elemento) elemento.classList.toggle("hidden", tela !== id);
-  });
+let player = '';
+let theme = 'Conhecimentos gerais';
+let difficulty = 'facil';
+let round = [];
+let index = 0;
+let score = 0;
+let hits = 0;
+let seconds = 25;
+let tick = null;
+let locked = false;
+let soundOn = true;
+let audio = null;
+
+function safeGet(key) {
+  try { return localStorage.getItem(key); }
+  catch { return null; }
 }
 
-function embaralhar(lista) {
-  const copia = [...lista];
+function safeSet(key, value) {
+  try { localStorage.setItem(key, value); }
+  catch {}
+}
 
-  for (let i = copia.length - 1; i > 0; i--) {
+function safeRemove(key) {
+  try { localStorage.removeItem(key); }
+  catch {}
+}
+
+function shuffle(items) {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [copia[i], copia[j]] = [copia[j], copia[i]];
+    [copy[i], copy[j]] = [copy[j], copy[i]];
   }
-
-  return copia;
+  return copy;
 }
 
-function prepararBanco() {
-  const perguntasBase = banco[temaAtual] || banco["Conhecimentos gerais"];
+function showScreen(id) {
+  ['home', 'quiz', 'result'].forEach(screen => {
+    $(screen).classList.toggle('hidden', screen !== id);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-  /*
-    A dificuldade altera o nível de pontuação e o tempo.
-    Este banco inicial contém 10 perguntas por tema; ele pode ser
-    ampliado adicionando mais perguntas ao objeto "banco".
-  */
+function applyColorTheme() {
+  const colorTheme = safeGet(THEME_KEY) === 'light' ? 'light' : 'dark';
+  document.body.dataset.theme = colorTheme;
+  $('themeBtn').textContent = colorTheme === 'dark' ? '☀️ Modo claro' : '🌙 Modo escuro';
+}
 
-  perguntasJogo = embaralhar(perguntasBase).slice(0, TOTAL_PERGUNTAS);
+function beep(frequency = 660) {
+  if (!soundOn) return;
 
-  if (perguntasJogo.length < TOTAL_PERGUNTAS) {
-    perguntasJogo = embaralhar(perguntasBase);
+  try {
+    audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+    if (audio.state === 'suspended') audio.resume();
+
+    const oscillator = audio.createOscillator();
+    const gain = audio.createGain();
+
+    oscillator.frequency.value = frequency;
+    gain.gain.setValueAtTime(0.001, audio.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.05, audio.currentTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + 0.15);
+
+    oscillator.connect(gain);
+    gain.connect(audio.destination);
+    oscillator.start();
+    oscillator.stop(audio.currentTime + 0.16);
+  } catch {}
+}
+
+function getRanking() {
+  try {
+    const data = JSON.parse(safeGet(RANK_KEY) || '[]');
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
   }
 }
 
-function atualizarImagem() {
-  const imagem = imagens[temaAtual] || imagens["Conhecimentos gerais"];
+function renderRanking() {
+  const ranking = getRanking()
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 10);
 
-  const img = $("questionImage");
-  if (img) {
-    img.src = imagem;
-    img.alt = "Imagem relacionada ao tema " + temaAtual;
-    img.onerror = () => {
-      img.style.display = "none";
-    };
-    img.onload = () => {
-      img.style.display = "";
-    };
-  }
+  $('ranking').innerHTML = '';
 
-  if ($("imageCaption")) {
-    $("imageCaption").textContent = "Tema: " + temaAtual;
-  }
-}
-
-function iniciarJogo() {
-  temaAtual = $("theme")?.value || "Conhecimentos gerais";
-  dificuldadeAtual = $("difficulty")?.value || "facil";
-  nomeJogador = ($("player")?.value || "").trim() || "Jogador";
-
-  if (!banco[temaAtual]) {
-    alert("Este tema ainda não possui perguntas cadastradas.");
+  if (!ranking.length) {
+    $('ranking').innerHTML =
+      '<div class="empty">Ainda não há pontuações. Seja o primeiro!</div>';
     return;
   }
 
-  prepararBanco();
+  ranking.forEach((entry, position) => {
+    const row = document.createElement('div');
+    row.className = 'rankrow';
 
-  indice = 0;
-  pontos = 0;
-  acertos = 0;
+    const name = document.createElement('span');
+    name.textContent = `${position + 1}. ${entry.name} · ${entry.theme}`;
 
-  if ($("score")) $("score").textContent = pontos;
-  if ($("themeBadge")) $("themeBadge").textContent = temaAtual;
+    const points = document.createElement('b');
+    points.textContent = `${entry.score} pts`;
 
-  mostrarTela("quiz");
-  mostrarPergunta();
+    row.append(name, points);
+    $('ranking').appendChild(row);
+  });
 }
 
-function mostrarPergunta() {
-  clearInterval(intervalo);
-  respondeu = false;
-  tempoRestante = TEMPO_POR_PERGUNTA;
+function updateThemePreview() {
+  const selectedTheme = $('theme').value;
+  const data = themes[selectedTheme];
 
-  const atual = perguntasJogo[indice];
+  $('previewImage').src = data.image;
+  $('previewImage').alt = `Imagem do tema ${selectedTheme}`;
+  $('previewTitle').textContent = selectedTheme;
+}
 
-  if (!atual) {
-    finalizarJogo();
+function startGame() {
+  if (!$('terms').checked) {
+    alert('Leia e aceite o termo de participação antes de começar.');
     return;
   }
 
-  if ($("counter")) {
-    $("counter").textContent = `Pergunta ${indice + 1} de ${perguntasJogo.length}`;
-  }
+  player = $('player').value.trim() || 'Jogador';
+  theme = $('theme').value;
+  difficulty = $('difficulty').value;
 
-  if ($("question")) $("question").textContent = atual[0];
-  if ($("score")) $("score").textContent = pontos;
-  if ($("timer")) $("timer").textContent = tempoRestante;
+  const selectedTheme = themes[theme];
+  const pool = selectedTheme[difficulty === 'facil' ? 'easy' :
+    difficulty === 'medio' ? 'medium' : 'hard'];
 
-  if ($("progress")) {
-    $("progress").style.width =
-      `${(indice / perguntasJogo.length) * 100}%`;
-  }
+  // Não mistura perguntas de outros níveis.
+  round = shuffle(pool).slice(0, 10).map(question => {
+    const answers = shuffle(
+      question[1].map((answer, i) => ({
+        answer,
+        correct: i === question[2]
+      }))
+    );
 
-  if ($("feedback")) {
-    $("feedback").textContent = "";
-    $("feedback").className = "feedback";
-  }
-
-  if ($("nextBtn")) $("nextBtn").disabled = true;
-
-  atualizarImagem();
-
-  const area = $("answers");
-  if (!area) return;
-
-  area.innerHTML = "";
-
-  atual[1].forEach((alternativa, i) => {
-    const botao = document.createElement("button");
-    botao.type = "button";
-    botao.className = "answer";
-    botao.textContent = alternativa;
-
-    botao.addEventListener("click", () => escolherResposta(i, botao));
-    area.appendChild(botao);
+    return [
+      question[0],
+      answers.map(item => item.answer),
+      answers.findIndex(item => item.correct)
+    ];
   });
 
-  iniciarCronometro();
+  index = 0;
+  score = 0;
+  hits = 0;
+  locked = false;
+
+  $('themeBadge').textContent =
+    `${theme.toUpperCase()} · ${difficultyNames[difficulty]}`;
+
+  updateThemePreview();
+  showScreen('quiz');
+  beep(520);
+  showQuestion();
 }
 
-function iniciarCronometro() {
-  clearInterval(intervalo);
-  tempoRestante = TEMPO_POR_PERGUNTA;
+function showQuestion() {
+  clearInterval(tick);
+  locked = false;
 
-  if ($("timer")) $("timer").textContent = tempoRestante;
+  seconds = difficulty === 'dificil' ? 15 :
+    difficulty === 'medio' ? 20 : 25;
 
-  intervalo = setInterval(() => {
-    tempoRestante--;
+  const current = round[index];
 
-    if ($("timer")) $("timer").textContent = tempoRestante;
+  $('counter').textContent = `${index + 1}/${round.length}`;
+  $('score').textContent = score;
+  $('timer').textContent = `${seconds}s`;
+  $('progress').style.width = `${index / round.length * 100}%`;
+  $('question').textContent = current[0];
 
-    if (tempoRestante <= 0) {
-      clearInterval(intervalo);
-      tempoEsgotado();
+  $('questionImage').src = themes[theme].image;
+  $('questionImage').alt = `Imagem do tema ${theme}`;
+  $('imageCaption').textContent =
+    `${theme} · ${difficultyNames[difficulty]} · imagem ilustrativa`;
+
+  $('feedback').textContent = '';
+  $('feedback').className = '';
+  $('nextBtn').classList.add('hidden');
+  $('answers').innerHTML = '';
+
+  ['A', 'B', 'C', 'D'].forEach((letter, i) => {
+    const button = document.createElement('button');
+    button.className = 'answer';
+
+    const label = document.createElement('span');
+    label.className = 'letter';
+    label.textContent = letter;
+
+    const text = document.createElement('span');
+    text.textContent = current[1][i];
+
+    button.append(label, text);
+    button.addEventListener('click', () => chooseAnswer(i));
+    $('answers').appendChild(button);
+  });
+
+  tick = setInterval(() => {
+    seconds--;
+    $('timer').textContent = `${seconds}s`;
+
+    if (seconds <= 5) $('timer').style.color = 'var(--red)';
+    else $('timer').style.color = 'var(--text)';
+
+    if (seconds <= 0) {
+      clearInterval(tick);
+      chooseAnswer(-1);
     }
   }, 1000);
 }
 
-function escolherResposta(indiceResposta, botaoSelecionado) {
-  if (respondeu) return;
+function chooseAnswer(choice) {
+  if (locked) return;
 
-  respondeu = true;
-  clearInterval(intervalo);
+  locked = true;
+  clearInterval(tick);
 
-  const atual = perguntasJogo[indice];
-  const correta = atual[2];
-  const botoes = $("answers")?.querySelectorAll("button") || [];
+  const current = round[index];
+  const correct = current[2];
+  const buttons = [...$('answers').querySelectorAll('button')];
 
-  botoes.forEach((botao) => {
-    botao.disabled = true;
+  buttons.forEach((button, i) => {
+    button.disabled = true;
+    if (i === correct) button.classList.add('correct');
+    if (i === choice && choice !== correct) button.classList.add('wrong');
   });
 
-  if (indiceResposta === correta) {
-    acertos++;
+  if (choice === correct) {
+    hits++;
 
-    const bonusTempo = Math.max(0, tempoRestante) * 10;
-    const multiplicador =
-      dificuldadeAtual === "dificil" ? 2 :
-      dificuldadeAtual === "medio" ? 1.5 : 1;
+    const multiplier = difficulty === 'facil' ? 1 :
+      difficulty === 'medio' ? 1.25 : 1.6;
 
-    pontos += Math.round((100 + bonusTempo) * multiplicador);
+    const gained = Math.round((300 + seconds * 20) * multiplier);
+    score += gained;
 
-    botaoSelecionado.classList.add("correct");
-
-    if ($("feedback")) {
-      $("feedback").textContent = "Correto! " + atual[3];
-      $("feedback").className = "feedback correct";
-    }
+    $('feedback').textContent = `Correto! +${gained} pontos.`;
+    $('feedback').className = 'good';
+    beep(800);
   } else {
-    botaoSelecionado.classList.add("incorrect");
+    $('feedback').textContent = choice === -1
+      ? `Tempo esgotado! Resposta correta: ${current[1][correct]}.`
+      : `Resposta correta: ${current[1][correct]}.`;
 
-    if (botoes[correta]) {
-      botoes[correta].classList.add("correct");
-    }
-
-    if ($("feedback")) {
-      $("feedback").textContent =
-        "Não foi dessa vez. " + atual[3];
-      $("feedback").className = "feedback incorrect";
-    }
+    $('feedback').className = 'bad';
+    beep(250);
   }
 
-  if ($("score")) $("score").textContent = pontos;
-  if ($("nextBtn")) $("nextBtn").disabled = false;
+  $('score').textContent = score;
+  $('progress').style.width = `${(index + 1) / round.length * 100}%`;
 
-  if ($("nextBtn")) {
-    $("nextBtn").textContent =
-      indice === perguntasJogo.length - 1 ? "Ver resultado" : "Próxima pergunta";
-  }
+  $('nextBtn').textContent = index === round.length - 1
+    ? 'Ver resultado →'
+    : 'Próxima pergunta →';
+
+  $('nextBtn').classList.remove('hidden');
 }
 
-function tempoEsgotado() {
-  if (respondeu) return;
+function nextQuestion() {
+  if (!locked) return;
 
-  respondeu = true;
+  index++;
 
-  const atual = perguntasJogo[indice];
-  const botoes = $("answers")?.querySelectorAll("button") || [];
+  if (index >= round.length) finishGame();
+  else showQuestion();
+}
 
-  botoes.forEach((botao) => {
-    botao.disabled = true;
+function finishGame() {
+  clearInterval(tick);
+
+  const accuracy = Math.round(hits / round.length * 100);
+
+  $('resultTitle').textContent = hits === round.length
+    ? 'Perfeito! 🎉'
+    : hits >= Math.ceil(round.length * 0.7)
+      ? 'Mandou muito bem!'
+      : hits >= Math.ceil(round.length * 0.4)
+        ? 'Bom trabalho!'
+        : 'Continue treinando!';
+
+  $('finalScore').textContent = `${score} pontos`;
+  $('correct').textContent = `${hits}/${round.length}`;
+  $('accuracy').textContent = `${accuracy}%`;
+  $('resultTheme').textContent = `${difficultyNames[difficulty]} · ${theme}`;
+
+  const ranking = getRanking();
+
+  ranking.push({
+    name: player.slice(0, 20),
+    theme,
+    difficulty: difficultyNames[difficulty],
+    score,
+    hits,
+    date: new Date().toISOString()
   });
 
-  if (botoes[atual[2]]) {
-    botoes[atual[2]].classList.add("correct");
-  }
+  ranking.sort((a, b) => b.score - a.score);
+  safeSet(RANK_KEY, JSON.stringify(ranking.slice(0, 50)));
 
-  if ($("feedback")) {
-    $("feedback").textContent =
-      "O tempo acabou! " + atual[3];
-    $("feedback").className = "feedback incorrect";
-  }
-
-  if ($("nextBtn")) {
-    $("nextBtn").disabled = false;
-    $("nextBtn").textContent =
-      indice === perguntasJogo.length - 1 ? "Ver resultado" : "Próxima pergunta";
-  }
+  renderRanking();
+  showScreen('result');
+  beep(600);
 }
 
-function proximaPergunta() {
-  if (!respondeu) return;
+$('theme').addEventListener('change', updateThemePreview);
 
-  indice++;
-
-  if (indice >= perguntasJogo.length) {
-    finalizarJogo();
-  } else {
-    mostrarPergunta();
-  }
-}
-
-function finalizarJogo() {
-  clearInterval(intervalo);
-
-  mostrarTela("result");
-
-  const porcentagem = Math.round((acertos / perguntasJogo.length) * 100);
-
-  if ($("resultTitle")) {
-    $("resultTitle").textContent =
-      porcentagem >= 80 ? "Mandou muito bem!" :
-      porcentagem >= 50 ? "Bom trabalho!" :
-      "Continue praticando!";
-  }
-
-  if ($("finalScore")) $("finalScore").textContent = pontos;
-  if ($("correct")) $("correct").textContent = `${acertos}/${perguntasJogo.length}`;
-  if ($("accuracy")) $("accuracy").textContent = `${porcentagem}%`;
-  if ($("resultTheme")) {
-    $("resultTheme").textContent =
-      `${temaAtual} • ${nomesDificuldade[dificuldadeAtual] || "Fácil"}`;
-  }
-
-  salvarRanking({
-    nome: nomeJogador,
-    tema: temaAtual,
-    dificuldade: dificuldadeAtual,
-    pontos,
-    acertos,
-    porcentagem,
-    data: new Date().toLocaleDateString("pt-BR")
-  });
-}
-
-function salvarRanking(resultado) {
-  let ranking = [];
-
-  try {
-    ranking = JSON.parse(localStorage.getItem("nextechRanking") || "[]");
-  } catch {
-    ranking = [];
-  }
-
-  ranking.push(resultado);
-  ranking.sort((a, b) => b.pontos - a.pontos);
-  ranking = ranking.slice(0, 10);
-
-  localStorage.setItem("nextechRanking", JSON.stringify(ranking));
-  renderizarRanking();
-}
-
-function renderizarRanking() {
-  const area = $("ranking");
-  if (!area) return;
-
-  let ranking = [];
-
-  try {
-    ranking = JSON.parse(localStorage.getItem("nextechRanking") || "[]");
-  } catch {
-    ranking = [];
-  }
-
-  if (ranking.length === 0) {
-    area.innerHTML = "<p>Ainda não há resultados. Seja o primeiro a jogar!</p>";
-    return;
-  }
-
-  area.innerHTML = "";
-
-  ranking.forEach((item, i) => {
-    const linha = document.createElement("div");
-    linha.className = "ranking-item";
-
-    const posicao = document.createElement("strong");
-    posicao.textContent = `${i + 1}. ${item.nome}`;
-
-    const detalhes = document.createElement("span");
-    detalhes.textContent =
-      `${item.tema} • ${item.pontos} pontos • ${item.porcentagem}%`;
-
-    linha.append(posicao, detalhes);
-    area.appendChild(linha);
-  });
-}
-
-function voltarInicio() {
-  clearInterval(intervalo);
-  mostrarTela("home");
-  renderizarRanking();
-}
-
-function atualizarAjudaDificuldade() {
-  const dificuldade = $("difficulty")?.value || "facil";
-
-  if ($("difficultyHelp")) {
-    $("difficultyHelp").textContent =
-      ajudaDificuldade[dificuldade] || ajudaDificuldade.facil;
-  }
-}
-
-function atualizarPreviaTema() {
-  const tema = $("theme")?.value || "Conhecimentos gerais";
-  const imagem = imagens[tema] || imagens["Conhecimentos gerais"];
-
-  if ($("previewImage")) {
-    $("previewImage").src = imagem;
-    $("previewImage").alt = "Prévia do tema " + tema;
-  }
-
-  if ($("previewTitle")) $("previewTitle").textContent = tema;
-
-  if ($("previewDescription")) {
-    $("previewDescription").textContent =
-      `Teste seus conhecimentos sobre ${tema.toLowerCase()}.`;
-  }
-}
-
-function configurarModoVisual() {
-  const botao = $("themeBtn");
-  if (!botao) return;
-
-  botao.addEventListener("click", () => {
-    document.body.classList.toggle("light-mode");
-
-    const claro = document.body.classList.contains("light-mode");
-    botao.textContent = claro ? "🌙 Modo escuro" : "☀️ Modo claro";
-  });
-}
-
-function configurarSom() {
-  const botao = $("soundBtn");
-  if (!botao) return;
-
-  let somAtivo = true;
-
-  botao.addEventListener("click", () => {
-    somAtivo = !somAtivo;
-    botao.textContent = somAtivo ? "♫ Som ligado" : "♫ Som desligado";
-  });
-}
-
-function configurarTermos() {
-  const botao = $("termsToggle");
-  const painel = $("termsPanel");
-
-  if (!botao || !painel) return;
-
-  botao.addEventListener("click", () => {
-    const aberto = !painel.classList.contains("hidden");
-
-    painel.classList.toggle("hidden", aberto);
-    botao.setAttribute("aria-expanded", String(!aberto));
-    botao.textContent = aberto
-      ? "＋ Ler termo de participação e autorização"
-      : "− Ocultar termo de participação e autorização";
-  });
-}
-
-function configurarEventos() {
-  $("startBtn")?.addEventListener("click", iniciarJogo);
-  $("nextBtn")?.addEventListener("click", proximaPergunta);
-  $("quitBtn")?.addEventListener("click", voltarInicio);
-  $("againBtn")?.addEventListener("click", iniciarJogo);
-  $("homeBtn")?.addEventListener("click", voltarInicio);
-
-  $("theme")?.addEventListener("change", atualizarPreviaTema);
-  $("difficulty")?.addEventListener("change", atualizarAjudaDificuldade);
-
-  $("clearRank")?.addEventListener("click", () => {
-    const confirmar = confirm("Tem certeza de que deseja apagar o ranking?");
-
-    if (confirmar) {
-      localStorage.removeItem("nextechRanking");
-      renderizarRanking();
-    }
-  });
-
-  configurarModoVisual();
-  configurarSom();
-  configurarTermos();
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  configurarEventos();
-  atualizarPreviaTema();
-  atualizarAjudaDificuldade();
-  renderizarRanking();
+$('difficulty').addEventListener('change', () => {
+  $('difficultyHelp').textContent = difficultyHelpText[$('difficulty').value];
 });
+
+$('termsToggle').addEventListener('click', () => {
+  const panel = $('termsPanel');
+  const opening = panel.classList.contains('hidden');
+
+  panel.classList.toggle('hidden', !opening);
+  $('termsToggle').textContent = opening
+    ? '− Ocultar termo de participação'
+    : '＋ Ler termo de participação';
+});
+
+$('startBtn').addEventListener('click', startGame);
+$('nextBtn').addEventListener('click', nextQuestion);
+
+$('quitBtn').addEventListener('click', () => {
+  if (confirm('Sair da partida? Seu progresso atual não será salvo.')) {
+    clearInterval(tick);
+    showScreen('home');
+  }
+});
+
+$('againBtn').addEventListener('click', startGame);
+
+$('homeBtn').addEventListener('click', () => {
+  showScreen('home');
+  renderRanking();
+});
+
+$('clearRank').addEventListener('click', () => {
+  if (confirm('Deseja apagar o ranking salvo neste navegador?')) {
+    safeRemove(RANK_KEY);
+    renderRanking();
+  }
+});
+
+$('themeBtn').addEventListener('click', () => {
+  const current = safeGet(THEME_KEY) === 'light' ? 'light' : 'dark';
+  safeSet(THEME_KEY, current === 'dark' ? 'light' : 'dark');
+  applyColorTheme();
+});
+
+$('soundBtn').addEventListener('click', () => {
+  soundOn = !soundOn;
+  safeSet(SOUND_KEY, soundOn ? 'on' : 'off');
+  $('soundBtn').textContent = soundOn ? '♫ Som ligado' : '♫ Som desligado';
+  if (soundOn) beep(700);
+});
+
+soundOn = safeGet(SOUND_KEY) !== 'off';
+$('soundBtn').textContent = soundOn ? '♫ Som ligado' : '♫ Som desligado';
+
+applyColorTheme();
+updateThemePreview();
+renderRanking();
