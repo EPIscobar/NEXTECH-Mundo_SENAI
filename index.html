@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NexTech Quiz</title>
   <link rel="stylesheet" href="style.css">
@@ -11,8 +11,8 @@
   <header>
     <a class="logo" href="#">NEX<span>TECH</span> <small>QUIZ</small></a>
     <div class="header-actions">
-      <button id="themeBtn" class="secondary">☀️ Modo claro</button>
-      <button id="soundBtn" class="secondary">♫ Som ligado</button>
+      <button id="themeBtn" class="secondary" type="button">☀️ Modo claro</button>
+      <button id="soundBtn" class="secondary" type="button">♫ Som ligado</button>
     </div>
   </header>
 
@@ -20,7 +20,7 @@
     <section id="home" class="screen">
       <p class="eyebrow">APRENDER TAMBÉM É BRINCADEIRA</p>
       <h1>Seu próximo nível começa <span>aqui.</span></h1>
-      <p class="intro">Escolha um tema, teste seus conhecimentos e ganhe pontos!</p>
+      <p class="intro">Escolha seu tema favorito, responda 10 perguntas divertidas e ganhe pontos!</p>
 
       <div class="layout">
         <section class="card">
@@ -45,59 +45,62 @@
             <option>Corpo humano</option>
           </select>
 
-          <div id="themePreview" class="theme-preview">
-            <img id="previewImage" src="" alt="">
-            <p id="previewTitle"></p>
-          </div>
-
-          <label for="difficulty">Dificuldade</label>
+          <label for="difficulty">Escolha a dificuldade</label>
           <select id="difficulty">
-            <option value="facil">🟢 Fácil</option>
-            <option value="medio">🟡 Médio</option>
-            <option value="dificil">🔴 Difícil</option>
+            <option value="facil">🟢 Fácil — perguntas básicas</option>
+            <option value="medio">🟡 Médio — exige mais atenção</option>
+            <option value="dificil">🔴 Difícil — perguntas desafiadoras</option>
           </select>
-          <p id="difficultyHelp" class="note">
-            Perguntas básicas para começar.
-          </p>
+
+          <p id="difficultyHelp" class="note">Perguntas básicas para começar e ganhar confiança.</p>
 
           <div class="terms-area">
-            <button id="termsToggle" class="terms-toggle" type="button">
-              ＋ Ler termo de participação
+            <button type="button" id="termsToggle" class="terms-toggle"
+              aria-expanded="false" aria-controls="termsPanel">
+              ＋ Ler termo de participação e autorização
             </button>
+
             <div id="termsPanel" class="terms-panel hidden">
-              <h3>Termo de participação</h3>
-              <p>O NexTech Quiz é uma atividade educativa e recreativa.</p>
-              <p>Use um apelido, evite compartilhar dados pessoais e respeite os demais participantes.</p>
-              <p>A pontuação é guardada somente neste navegador.</p>
+              <h3>Termo de participação e autorização</h3>
+              <p>Ao participar do NexTech Quiz, você concorda em jogar de forma respeitosa e seguir as orientações da atividade.</p>
+              <ul>
+                <li><strong>Apelido:</strong> use um nome ou apelido; evite informar dados pessoais.</li>
+                <li><strong>Pontuação e ranking:</strong> seu apelido, tema, dificuldade e pontuação ficam armazenados neste navegador.</li>
+                <li><strong>Limpeza dos dados:</strong> o ranking pode ser apagado pelo botão correspondente.</li>
+                <li><strong>Participação:</strong> o jogo é recreativo e educativo.</li>
+                <li><strong>Imagens:</strong> as imagens são ilustrativas e podem ser carregadas de um serviço externo.</li>
+              </ul>
+              <p>Se você for menor de idade, siga também as orientações de seu responsável e da instituição organizadora.</p>
             </div>
           </div>
 
           <label class="consent">
             <input type="checkbox" id="terms">
-            Li e aceito o termo de participação.
+            Li o termo acima e aceito participar. Meu apelido e pontuação serão salvos somente neste navegador.
           </label>
 
-          <button id="startBtn" class="primary">Começar partida →</button>
+          <button id="startBtn" class="primary" type="button">Começar partida →</button>
+          <p class="note">Não use nome completo nem dados pessoais.</p>
         </section>
 
         <section class="card">
           <h2>🏆 Hall da fama</h2>
           <div id="ranking" class="ranking"></div>
-          <button id="clearRank" class="secondary">Limpar ranking</button>
+          <button id="clearRank" class="secondary" type="button">Limpar ranking</button>
         </section>
       </div>
     </section>
 
     <section id="quiz" class="screen hidden">
       <div class="quizhead">
-        <button id="quitBtn" class="secondary">← Início</button>
+        <button id="quitBtn" class="secondary" type="button">← Início</button>
         <span id="themeBadge" class="badge"></span>
       </div>
 
       <div class="stats">
         <div><small>PERGUNTA</small><b id="counter">1/10</b></div>
         <div><small>PONTOS</small><b id="score">0</b></div>
-        <div><small>TEMPO</small><b id="timer">25s</b></div>
+        <div><small>TEMPO</small><b id="timer">20s</b></div>
       </div>
 
       <div class="bar"><div id="progress"></div></div>
@@ -106,14 +109,14 @@
         <p class="eyebrow">DESAFIO NEXTECH</p>
 
         <figure class="question-visual">
-          <img id="questionImage" src="" alt="Imagem do tema">
-          <figcaption id="imageCaption"></figcaption>
+          <img id="questionImage" src="" alt="Imagem relacionada à pergunta" loading="lazy">
+          <figcaption id="imageCaption">Imagem ilustrativa</figcaption>
         </figure>
 
-        <h2 id="question"></h2>
+        <h2 id="question">Pergunta</h2>
         <div id="answers" class="answers"></div>
         <p id="feedback" aria-live="polite"></p>
-        <button id="nextBtn" class="primary hidden">Próxima pergunta →</button>
+        <button id="nextBtn" class="primary hidden" type="button">Próxima pergunta →</button>
       </section>
     </section>
 
@@ -129,8 +132,8 @@
           <div><small>TEMA</small><b id="resultTheme">—</b></div>
         </div>
 
-        <button id="againBtn" class="primary">Jogar novamente ↻</button>
-        <button id="homeBtn" class="secondary">Voltar ao início</button>
+        <button id="againBtn" class="primary" type="button">Jogar novamente ↻</button>
+        <button id="homeBtn" class="secondary" type="button">Voltar ao início</button>
       </section>
     </section>
   </main>
