@@ -3,141 +3,287 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NexTech Quiz</title>
+  <meta name="theme-color" content="#101426">
+  <meta name="description" content="NexTech Quiz — aprenda, jogue e evolua.">
+  <title>NexTech Quiz | Jogue e evolua</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
-<body>
-  <header>
-    <a class="logo" href="#">NEX<span>TECH</span> <small>QUIZ</small></a>
-    <div class="header-actions">
-      <button id="themeBtn" class="secondary" type="button">☀️ Modo claro</button>
-      <button id="soundBtn" class="secondary" type="button">♫ Som ligado</button>
+<body data-theme="dark">
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#inicio" id="brandHome" aria-label="NexTech Quiz - início">
+      <span class="brand-mark">N</span>
+      <span>NEX<span class="brand-accent">TECH</span><small>QUIZ ARENA</small></span>
+    </a>
+    <div class="top-actions">
+      <span class="live-pill"><i></i> MODO JOGO</span>
+      <button id="themeBtn" class="icon-btn" type="button" aria-label="Alternar tema" title="Alternar tema">☀️</button>
+      <button id="soundBtn" class="icon-btn" type="button" aria-label="Desligar sons" title="Som ligado">♫</button>
     </div>
   </header>
 
-  <main>
-    <section id="home" class="screen">
-      <p class="eyebrow">APRENDER TAMBÉM É BRINCADEIRA</p>
-      <h1>Seu próximo nível começa <span>aqui.</span></h1>
-      <p class="intro">Escolha seu tema favorito, responda 10 perguntas divertidas e ganhe pontos!</p>
+  <main class="app-shell">
+    <section id="home" class="screen home-screen">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-line"></span> APRENDER TAMBÉM É BRINCADEIRA</p>
+          <h1>Seu próximo nível<br>começa <span class="gradient-text">aqui.</span></h1>
+          <p class="hero-subtitle">Escolha seu universo, desafie seus conhecimentos e conquiste seu lugar no ranking.</p>
+          <div class="hero-tags">
+            <span>⚡ 10 perguntas por rodada</span>
+            <span>🎯 3 níveis de desafio</span>
+            <span>🏆 Ranking local</span>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="orbit orbit-a"></div>
+          <div class="orbit orbit-b"></div>
+          <div class="hero-cube"><span>N</span><i>✦</i></div>
+          <div class="float-card float-card-top">+250 XP <b>✦</b></div>
+          <div class="float-card float-card-bottom">NÍVEL UP <b>↗</b></div>
+        </div>
+      </div>
 
-      <div class="layout">
-        <section class="card">
-          <h2>Vamos jogar!</h2>
+      <div class="home-grid">
+        <section class="panel setup-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">PREPARE-SE</p>
+              <h2>Monte sua partida</h2>
+            </div>
+            <span class="heading-icon">🎮</span>
+          </div>
 
-          <label for="player">Nome ou apelido</label>
-          <input id="player" maxlength="20" placeholder="Ex.: NexPlayer">
+          <label for="player">Seu apelido</label>
+          <input id="player" type="text" maxlength="20" autocomplete="nickname" placeholder="Ex.: NexPlayer">
 
-          <label for="theme">Escolha um tema</label>
-          <select id="theme">
-            <option>Conhecimentos gerais</option>
-            <option>Animais</option>
-            <option>Anime</option>
-            <option>Lugares do mundo</option>
-            <option>Filmes e séries</option>
-            <option>Tecnologia</option>
-            <option>Esportes</option>
-            <option>História</option>
-            <option>Geografia</option>
-            <option>Natureza</option>
-            <option>Jogos</option>
-            <option>Corpo humano</option>
-          </select>
-
-          <label for="difficulty">Escolha a dificuldade</label>
-          <select id="difficulty">
-            <option value="facil">🟢 Fácil — perguntas básicas</option>
-            <option value="medio">🟡 Médio — exige mais atenção</option>
-            <option value="dificil">🔴 Difícil — perguntas desafiadoras</option>
-          </select>
-
-          <p id="difficultyHelp" class="note">Perguntas básicas para começar e ganhar confiança.</p>
-
-          <div class="terms-area">
-            <button type="button" id="termsToggle" class="terms-toggle"
-              aria-expanded="false" aria-controls="termsPanel">
-              ＋ Ler termo de participação e autorização
-            </button>
-
-            <div id="termsPanel" class="terms-panel hidden">
-              <h3>Termo de participação e autorização</h3>
-              <p>Ao participar do NexTech Quiz, você concorda em jogar de forma respeitosa e seguir as orientações da atividade.</p>
-              <ul>
-                <li><strong>Apelido:</strong> use um nome ou apelido; evite informar dados pessoais.</li>
-                <li><strong>Pontuação e ranking:</strong> seu apelido, tema, dificuldade e pontuação ficam armazenados neste navegador.</li>
-                <li><strong>Limpeza dos dados:</strong> o ranking pode ser apagado pelo botão correspondente.</li>
-                <li><strong>Participação:</strong> o jogo é recreativo e educativo.</li>
-                <li><strong>Imagens:</strong> as imagens são ilustrativas e podem ser carregadas de um serviço externo.</li>
-              </ul>
-              <p>Se você for menor de idade, siga também as orientações de seu responsável e da instituição organizadora.</p>
+          <div class="field-row">
+            <div>
+              <label for="theme">Escolha o tema</label>
+              <select id="theme">
+                <option>Conhecimentos gerais</option>
+                <option>Animais</option>
+                <option>Anime</option>
+                <option>Lugares do mundo</option>
+                <option>Filmes e séries</option>
+                <option>Tecnologia</option>
+                <option>Esportes</option>
+                <option>História</option>
+                <option>Geografia</option>
+                <option>Natureza</option>
+                <option>Jogos</option>
+                <option>Corpo humano</option>
+              </select>
+            </div>
+            <div>
+              <label for="difficulty">Dificuldade</label>
+              <select id="difficulty">
+                <option value="facil">🟢 Fácil</option>
+                <option value="medio">🟡 Médio</option>
+                <option value="dificil">🔴 Difícil</option>
+              </select>
             </div>
           </div>
 
-          <label class="consent">
-            <input type="checkbox" id="terms">
-            Li o termo acima e aceito participar. Meu apelido e pontuação serão salvos somente neste navegador.
+          <div id="difficultyHelp" class="difficulty-hint">
+            <span>✦</span> Perguntas básicas para começar e ganhar confiança.
+          </div>
+
+          <div class="terms-box">
+            <button type="button" id="termsToggle" class="terms-toggle" aria-expanded="false" aria-controls="termsPanel">
+              <span>ⓘ</span> Termo de participação <b id="termsChevron">＋</b>
+            </button>
+            <div id="termsPanel" class="terms-panel hidden">
+              <h3>Antes de jogar</h3>
+              <p>O NexTech Quiz é uma atividade recreativa e educativa. Jogue com respeito e use um apelido, sem informar dados pessoais.</p>
+              <ul>
+                <li>O apelido, tema, dificuldade e pontuação ficam salvos apenas neste navegador.</li>
+                <li>O jogo não envia essas informações para um servidor.</li>
+                <li>Você pode apagar o ranking usando o botão “Limpar ranking”.</li>
+                <li>As ilustrações são locais e não dependem de serviços externos.</li>
+              </ul>
+            </div>
+          </div>
+
+          <label class="consent-line">
+            <input id="terms" type="checkbox">
+            <span>Li e aceito o termo de participação.</span>
           </label>
 
-          <button id="startBtn" class="primary" type="button">Começar partida →</button>
-          <p class="note">Não use nome completo nem dados pessoais.</p>
+          <button id="startBtn" class="primary-btn" type="button">
+            <span>Começar partida</span><b>→</b>
+          </button>
+          <p id="formMessage" class="form-message" aria-live="polite">Você pode usar apenas um apelido.</p>
         </section>
 
-        <section class="card">
-          <h2>🏆 Hall da fama</h2>
-          <div id="ranking" class="ranking"></div>
-          <button id="clearRank" class="secondary" type="button">Limpar ranking</button>
-        </section>
+        <aside class="panel ranking-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">TOP PLAYERS</p>
+              <h2>Hall da fama</h2>
+            </div>
+            <span class="heading-icon trophy">🏆</span>
+          </div>
+
+          <div class="ranking-filters">
+            <div>
+              <label for="rankTheme">Tema</label>
+              <select id="rankTheme">
+                <option value="todos">Todos os temas</option>
+                <option selected>Conhecimentos gerais</option>
+                <option>Animais</option>
+                <option>Anime</option>
+                <option>Lugares do mundo</option>
+                <option>Filmes e séries</option>
+                <option>Tecnologia</option>
+                <option>Esportes</option>
+                <option>História</option>
+                <option>Geografia</option>
+                <option>Natureza</option>
+                <option>Jogos</option>
+                <option>Corpo humano</option>
+              </select>
+            </div>
+            <div>
+              <label for="rankDifficulty">Nível</label>
+              <select id="rankDifficulty">
+                <option value="todos">Todos</option>
+                <option value="FÁCIL" selected>Fácil</option>
+                <option value="MÉDIO">Médio</option>
+                <option value="DIFÍCIL">Difícil</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="ranking" class="ranking-list" aria-live="polite"></div>
+          <div class="ranking-footer">
+            <span>Salvo neste dispositivo</span>
+            <button id="clearRank" class="text-btn" type="button">Limpar ranking</button>
+          </div>
+        </aside>
       </div>
-    </section>
 
-    <section id="quiz" class="screen hidden">
-      <div class="quizhead">
-        <button id="quitBtn" class="secondary" type="button">← Início</button>
-        <span id="themeBadge" class="badge"></span>
-      </div>
-
-      <div class="stats">
-        <div><small>PERGUNTA</small><b id="counter">1/10</b></div>
-        <div><small>PONTOS</small><b id="score">0</b></div>
-        <div><small>TEMPO</small><b id="timer">20s</b></div>
-      </div>
-
-      <div class="bar"><div id="progress"></div></div>
-
-      <section class="card question-card">
-        <p class="eyebrow">DESAFIO NEXTECH</p>
-
-        <figure class="question-visual">
-          <img id="questionImage" src="" alt="Imagem relacionada à pergunta" loading="lazy">
-          <figcaption id="imageCaption">Imagem ilustrativa</figcaption>
-        </figure>
-
-        <h2 id="question">Pergunta</h2>
-        <div id="answers" class="answers"></div>
-        <p id="feedback" aria-live="polite"></p>
-        <button id="nextBtn" class="primary hidden" type="button">Próxima pergunta →</button>
+      <section class="how-strip">
+        <div>
+          <span class="step-num">01</span>
+          <p><b>Escolha</b><small>Seu tema favorito</small></p>
+        </div>
+        <div>
+          <span class="step-num">02</span>
+          <p><b>Responda</b><small>10 desafios por rodada</small></p>
+        </div>
+        <div>
+          <span class="step-num">03</span>
+          <p><b>Conquiste</b><small>Entre para o ranking</small></p>
+        </div>
       </section>
     </section>
 
-    <section id="result" class="screen hidden">
-      <section class="card result">
-        <p class="eyebrow">PARTIDA CONCLUÍDA</p>
-        <h1 id="resultTitle">Mandou bem!</h1>
-        <p class="big" id="finalScore">0 pontos</p>
+    <section id="quiz" class="screen quiz-screen hidden">
+      <div class="quiz-toolbar">
+        <button id="quitBtn" class="back-btn" type="button">← <span>Voltar ao início</span></button>
+        <div class="quiz-topic">
+          <span id="topicEmoji">🧠</span>
+          <span id="themeBadge">TEMA</span>
+        </div>
+        <span id="levelBadge" class="level-badge">FÁCIL</span>
+      </div>
 
-        <div class="stats">
-          <div><small>ACERTOS</small><b id="correct">0/10</b></div>
-          <div><small>PRECISÃO</small><b id="accuracy">0%</b></div>
-          <div><small>TEMA</small><b id="resultTheme">—</b></div>
+      <div class="quiz-progress-wrap">
+        <div class="progress-meta">
+          <span id="counter">PERGUNTA 1 DE 10</span>
+          <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress-track">
+          <div id="progress" class="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="quiz-layout">
+        <section class="panel question-panel">
+          <div class="question-topline">
+            <span class="question-label">DESAFIO NEXTECH</span>
+            <span id="questionNumber" class="question-number">01 / 10</span>
+          </div>
+
+          <div class="question-visual">
+            <img id="questionImage" src="assets/conhecimentos-gerais.svg" alt="Ilustração do tema" width="180" height="140">
+            <span id="imageCaption">CONHECIMENTOS GERAIS</span>
+          </div>
+
+          <h2 id="question">Carregando pergunta...</h2>
+          <div id="answers" class="answers-grid"></div>
+          <p id="feedback" class="feedback" aria-live="polite"></p>
+
+          <button id="nextBtn" class="primary-btn next-btn hidden" type="button">
+            <span>Próxima pergunta</span><b>→</b>
+          </button>
+        </section>
+
+        <aside class="quiz-side">
+          <div class="panel timer-panel">
+            <span class="timer-caption">TEMPO RESTANTE</span>
+            <div id="timerRing" class="timer-ring">
+              <div><b id="timer">20</b><small>SEG</small></div>
+            </div>
+            <p id="timerTip">Pense rápido, mas com atenção!</p>
+          </div>
+
+          <div class="panel score-panel">
+            <span class="mini-label">SUA PONTUAÇÃO</span>
+            <strong id="score">0</strong>
+            <span class="score-xp">✦ XP acumulado</span>
+            <div class="score-divider"></div>
+            <div class="score-facts">
+              <span>Acertos <b id="liveHits">0</b></span>
+              <span>Rodada <b>10 questões</b></span>
+            </div>
+          </div>
+
+          <div class="side-note">
+            💡 <span>Quanto mais rápido você responder corretamente, mais pontos ganha.</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="result" class="screen result-screen hidden">
+      <div class="result-glow"></div>
+      <section class="panel result-panel">
+        <div class="result-medal" id="resultMedal">🏆</div>
+        <p class="section-kicker">PARTIDA CONCLUÍDA</p>
+        <h1 id="resultTitle">Mandou bem!</h1>
+        <p class="result-subtitle" id="resultSubtitle">Sua jornada continua. Tente superar sua pontuação!</p>
+
+        <div class="final-score">
+          <strong id="finalScore">0</strong><span>pontos</span>
         </div>
 
-        <button id="againBtn" class="primary" type="button">Jogar novamente ↻</button>
-        <button id="homeBtn" class="secondary" type="button">Voltar ao início</button>
+        <div class="result-stats">
+          <div><small>ACERTOS</small><b id="correct">0/10</b></div>
+          <div><small>PRECISÃO</small><b id="accuracy">0%</b></div>
+          <div><small>DIFICULDADE</small><b id="resultDifficulty">FÁCIL</b></div>
+        </div>
+
+        <div class="result-theme" id="resultTheme">🧠 Conhecimentos gerais</div>
+
+        <div class="result-actions">
+          <button id="againBtn" class="primary-btn" type="button">
+            <span>Jogar novamente</span><b>↻</b>
+          </button>
+          <button id="homeBtn" class="secondary-btn" type="button">Voltar ao início</button>
+        </div>
       </section>
     </section>
   </main>
 
-  <footer>NexTech Quiz · Aprender • Jogar • Evoluir</footer>
+  <footer>
+    <span class="footer-brand">NEXTECH QUIZ</span>
+    <span>Aprender · Jogar · Evoluir</span>
+    <span>Feito para compartilhar conhecimento ✦</span>
+  </footer>
 </body>
 </html>

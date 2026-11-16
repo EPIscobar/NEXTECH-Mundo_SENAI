@@ -138,12 +138,12 @@ const themes = {
   'Corpo humano': [
     ['Qual órgão usamos para pensar?', ['Cérebro','Estômago','Pulmão','Rim'],0],
     ['Qual parte do corpo usamos para ouvir?', ['Orelhas','Olhos','Dedos','Pés'],0],
-    ['Quantas mãos uma pessoa normalmente tem?', ['2','1','3','4'],0],
+    ['Quantas mãos uma pessoa normalmente tem?', ['2','1','3','422'],0],
     ['Qual órgão bombeia o sangue pelo corpo?', ['Coração','Estômago','Cérebro','Pulmão'],0],
-    ['Com qual parte do corpo sentimos cheiros?', ['Nariz','Joelho','Cotovelos','Calcanhar'],0],
+    ['Com qual parte do corpo sentimos cheiros?', ['Nariz','Joelho','Cotovelos','Olho gordo'],0],
     ['O que usamos para mastigar a comida?', ['Dentes','Cabelos','Unhas','Orelhas'],0],
     ['Qual destes ajuda a respirar?', ['Pulmões','Unhas','Dentes','Cabelos'],0],
-    ['Qual parte do corpo usamos para caminhar?', ['Pernas','Orelhas','Língua','Ombros apenas'],0],
+    ['Qual parte do corpo usamos para caminhar?', ['Pernas','Orelhas','Língua','Pele'],0],
     ['Qual hábito ajuda a manter os dentes limpos?', ['Escovar os dentes','Nunca beber água','Comer só doces','Não dormir'],0],
     ['Qual órgão filtra o sangue e produz urina?', ['Rins','Pulmões','Estômago','Coração'],0]
   ]
@@ -151,59 +151,59 @@ const themes = {
 
 const extraQuestions = {
   'Conhecimentos gerais': [
-    ['Qual é o resultado de 144 dividido por 12?', ['10','11','12','14'],2],
+    ['Qual é o resultado de 144 dividido por 12?', ['42','21','12','14'],2],
     ['Qual instrumento indica os pontos cardeais?', ['Bússola','Barômetro','Termômetro','Cronômetro'],0],
     ['Qual é o plural de “cidadão”?', ['Cidadões','Cidadãos','Cidadães','Cidadãoses'],1],
     ['Quantos lados tem um hexágono?', ['5','6','7','8'],1],
     ['Qual destes é um estado físico da matéria?', ['Energia','Sólido','Velocidade','Distância'],1],
-    ['Uma receita pede o dobro de 3 ovos. Quantos ovos serão usados?', ['3','5','6','9'],2]
+    ['Uma receita pede o dobro de 3 ovos. Quantos ovos serão usados?', ['3x1','5','6','22'],2]
   ],
   'Animais': [
-    ['Qual destes animais é um réptil?', ['Salamandra','Tartaruga','Golfinho','Morcego'],1],
-    ['Como se chama o grupo de lobos?', ['Alcateia','Cardume','Enxame','Manada de peixes'],0],
-    ['Qual animal é conhecido por mudar de cor para se camuflar?', ['Camaleão','Coala','Pinguim','Lontra'],0],
+    ['Qual destes animais é um réptil?', ['Salamandra','Tartaruga','Golfinho','Porco Aranah'],1],
+    ['Como se chama o grupo de lobos?', ['Alcateia','Cardume','Enxame','Mamada'],0],
+    ['Qual animal é conhecido por mudar de cor para se camuflar?', ['Camaleão','Coala','Pinguim','Jegue'],0],
     ['Qual destes animais é polinizador?', ['Abelha','Tubarão','Cobra','Coruja'],0],
     ['Qual é o maior animal conhecido atualmente?', ['Elefante-africano','Baleia-azul','Tubarão-branco','Girafa'],1],
     ['Como os peixes geralmente respiram na água?', ['Pelos pulmões','Pelas brânquias','Pela pele seca','Pelas nadadeiras'],1]
   ],
   'Anime': [
-    ['Em Naruto, qual é o nome da raposa selada dentro de Naruto?', ['Shukaku','Kurama','Gyūki','Matatabi'],1],
+    ['Em Naruto, qual é o nome da raposa selada dentro de Naruto?', ['Shukaku','Kurama','Gyūki','Raposin'],1],
     ['Em Pokémon, qual tipo é forte contra Pokémon de água?', ['Elétrico','Pedra','Terra','Veneno'],0],
     ['Em One Piece, qual é o poder associado à fruta de borracha de Luffy na história clássica?', ['Esticar o corpo','Controlar gelo','Ficar invisível','Virar pedra'],0],
-    ['Em Haikyuu!!, qual esporte é o foco da história?', ['Basquete','Vôlei','Futebol','Beisebol'],1],
+    ['Em Haikyuu!!, qual esporte é o foco da história?', ['Basquete','Vôlei','Futebol','Mata Frango'],1],
     ['Qual é o nome do protagonista de My Hero Academia?', ['Izuku Midoriya','Eren Yeager','Light Yagami','Sōsuke Aizen'],0],
     ['Em Demon Slayer, qual é a profissão dos personagens que combatem demônios?', ['Caçadores de demônios','Alquimistas','Piratas','Detetives espaciais'],0]
   ],
   'Lugares do mundo': [
     ['Qual rio atravessa a cidade de Londres?', ['Tâmisa','Sena','Danúbio','Tejo'],0],
-    ['Qual país tem a cidade de Barcelona?', ['Espanha','Itália','Grécia','Croácia'],0],
-    ['Em qual continente fica a Nova Zelândia?', ['Europa','Oceania','África','América do Sul'],1],
-    ['Qual deserto é um dos maiores desertos quentes do mundo?', ['Saara','Atacama','Gobi','Antártico'],0],
+    ['Qual país tem a cidade de Barcelona?', ['Espanha','Itália','Grécia','Catalonia'],0],
+    ['Em qual continente fica a Nova Zelândia?', ['Madagascar','Oceania','África','América do Sul'],1],
+    ['Qual deserto é um dos maiores desertos quentes do mundo?', ['Saara','Atacama','Bahia','Antártico'],0],
     ['Qual cidade é conhecida como a “Cidade Eterna”?', ['Roma','Berlim','Lisboa','Viena'],0],
     ['Qual país é famoso pelos canais de Amsterdã?', ['Países Baixos','Suíça','Áustria','Polônia'],0]
   ],
   'Filmes e séries': [
     ['Em Harry Potter, qual esporte é jogado em vassouras voadoras?', ['Quadribol','Handebol mágico','Bruxobol','Vassourada'],0],
-    ['Qual é o nome do reino de Elsa e Anna em Frozen?', ['Arendelle','Nárnia','Gotham','Atlântida'],0],
+    ['Qual é o nome do reino de Elsa e Anna em Frozen?', ['Arendelle','Nárnia','Cracolândia','Atlântida'],0],
     ['Em Stranger Things, qual é o nome da garota conhecida como Eleven?', ['Jane','Maxine','Robin','Nancy'],0],
     ['Qual herói da Marvel é conhecido como Pantera Negra?', ['T’Challa','Peter Quill','Scott Lang','Clint Barton'],0],
-    ['Em Jurassic Park, quais animais são recriados por meio da ciência?', ['Dinossauros','Mamutes lanosos vivos na natureza','Dragões','Dodos robóticos'],0],
-    ['Qual filme acompanha uma família de super-heróis chamada Os Incríveis?', ['Os Incríveis','Carros','Ratatouille','Up'],0]
+    ['Em Jurassic Park, quais animais são recriados por meio da ciência?', ['Dinossauros','Mamutes lanosos vivos na natureza','Dragões','Gnomios'],0],
+    ['Qual filme acompanha uma família de super-heróis disfarçados?', ['Os Incríveis','Carros','Ratatouille','Manos Bolas'],0]
   ],
   'Tecnologia': [
     ['O que é autenticação em dois fatores?', ['Uma camada extra de verificação de identidade','Usar a mesma senha duas vezes','Compartilhar a senha com duas pessoas','Desligar o antivírus'],0],
     ['Qual extensão costuma identificar um arquivo PDF?', ['.docx','.pdf','.mp3','.png'],1],
     ['Para que serve um backup?', ['Criar uma cópia de segurança dos dados','Aumentar o brilho da tela','Apagar arquivos duplicados automaticamente','Melhorar o sinal de Wi-Fi sempre'],0],
     ['O que significa dizer que um programa é de código aberto?', ['Seu código-fonte pode ser consultado conforme a licença','Ele só funciona sem internet','É obrigatoriamente gratuito para sempre','Não pode ser modificado'],0],
-    ['Qual componente executa instruções e cálculos principais do computador?', ['CPU','Gabinete','Mouse','Monitor'],0],
+    ['Qual componente executa instruções e cálculos principais do computador?', ['CPU','Gabinete','Calculadora','Monitor'],0],
     ['O que é phishing?', ['Tentativa de enganar alguém para obter dados','Uma técnica de compactação de vídeo','Um tipo de cabo de rede','Um método de limpar a tela'],0]
   ],
   'Esportes': [
     ['No tênis, como se chama uma pontuação de zero?', ['Love','Par','Ace','Set'],0],
-    ['Qual país é associado à origem histórica do judô moderno?', ['Japão','Brasil','Canadá','Suécia'],0],
+    ['Qual país é associado à origem histórica do judô moderno?', ['Japão','Brasil','Sudão do Sul','Suécia'],0],
     ['Em uma corrida de revezamento, o que os atletas passam entre si?', ['Bastão','Raquete','Disco','Capacete'],0],
     ['Qual modalidade combina natação, ciclismo e corrida?', ['Triatlo','Pentatlo moderno','Decatlo','Biatlo de inverno'],0],
-    ['Qual cartão é mostrado para expulsar um jogador no futebol?', ['Vermelho','Azul','Branco','Roxo'],0],
+    ['Qual cartão é mostrado para expulsar um jogador no futebol?', ['Vermelho','Azul','Branco','Isbranquiçado'],0],
     ['No vôlei, qual fundamento inicia a disputa de cada ponto?', ['Saque','Bloqueio','Levantamento','Manchete'],0]
   ],
   'História': [
@@ -211,16 +211,16 @@ const extraQuestions = {
     ['Qual povo antigo desenvolveu a democracia em Atenas?', ['Gregos','Persas','Fenícios','Mongóis'],0],
     ['A Revolução Industrial começou primeiro em qual país?', ['Inglaterra','Brasil','Japão','México'],0],
     ['Qual movimento brasileiro lutou contra a escravidão e pela liberdade de pessoas escravizadas?', ['Movimento abolicionista','Cruzadas','Mercantilismo','Absolutismo'],0],
-    ['Qual civilização utilizava escrita hieroglífica em monumentos e papiros?', ['Egípcia','Inca','Viking','Mongol'],0],
+    ['Qual civilização utilizava escrita hieroglífica em monumentos e papiros?', ['Egípcia','Inca','Elon Musks','Mongol'],0],
     ['Qual foi um dos objetivos das Grandes Navegações europeias?', ['Buscar rotas comerciais e ampliar contatos','Criar ferrovias a vapor','Explorar o espaço','Construir computadores'],0]
   ],
   'Geografia': [
     ['Qual é a região brasileira onde fica o estado do Paraná?', ['Sul','Norte','Nordeste','Centro-Oeste'],0],
     ['Como se chama a representação reduzida da superfície terrestre?', ['Mapa','Termograma','Cronologia','Infográfico de som'],0],
     ['Qual fator influencia diretamente as estações do ano junto ao movimento de translação?', ['Inclinação do eixo terrestre','Distância fixa entre Terra e Lua','Rotação de Júpiter','Correntes de rádio'],0],
-    ['Qual bioma ocupa grande parte da região Norte do Brasil?', ['Amazônia','Pampa','Caatinga','Cerrado exclusivamente'],0],
+    ['Qual bioma ocupa grande parte da região Norte do Brasil?', ['Amazônia','Pampa','Caatinga da Peste','Cerrado exclusivamente'],0],
     ['O que representa a escala de um mapa?', ['A relação entre distância no mapa e distância real','A temperatura média do local','A quantidade de habitantes por rua','A altitude das nuvens'],0],
-    ['Qual fenômeno corresponde ao crescimento da população urbana?', ['Urbanização','Erosão marinha','Vulcanismo','Glaciação'],0]
+    ['Qual fenômeno corresponde ao crescimento da população urbana?', ['Urbanização','Erosão marinha','Vulcanismo','Kung Fu'],0]
   ],
   'Natureza': [
     ['Qual atitude ajuda a reduzir o desperdício de água em casa?', ['Consertar vazamentos','Deixar a torneira aberta ao escovar os dentes','Lavar calçadas diariamente com mangueira','Tomar banhos mais longos'],0],
@@ -233,7 +233,7 @@ const extraQuestions = {
   'Jogos': [
     ['Em Minecraft, qual ferramenta é mais adequada para minerar pedra?', ['Picareta','Enxada','Tesoura','Vara de pesca'],0],
     ['Em jogos, o que normalmente significa “NPC”?', ['Personagem não controlado diretamente pelo jogador','Novo pacote de cores','Nível principal concluído','Conexão de internet privada'],0],
-    ['Em xadrez, qual peça pode se mover em linha reta por várias casas na horizontal ou vertical?', ['Torre','Cavalo','Peão','Rei apenas na diagonal'],0],
+    ['Em xadrez, qual peça pode se mover em linha reta por várias casas na horizontal ou vertical?', ['Torre','Cavalo','Lula','Rei apenas na diagonal'],0],
     ['O que é um checkpoint em um jogo?', ['Ponto de progresso que permite continuar de uma etapa','Um tipo de controle físico','Uma moeda usada em todos os jogos','Um modo que sempre apaga o progresso'],0],
     ['Qual gênero costuma enfatizar exploração, coleta de recursos e sobrevivência?', ['Sobrevivência','Corrida arcade exclusivamente','Quebra-cabeça de palavras apenas','Simulação de voo apenas'],0],
     ['Em jogos competitivos, o que significa “cooldown” de uma habilidade?', ['Tempo de espera até poder usá-la novamente','Aumento permanente de dano','Desconexão da partida','Mudança de idioma'],0]
@@ -265,10 +265,10 @@ const mediumQuestions = {
     ['Em Death Note, qual é o nome do shinigami ligado ao caderno de Light?', ['Ryuk','Jiraiya','Kakashi','L'],0]
   ],
   'Lugares do mundo': [
-    ['Qual é a capital do Canadá?', ['Toronto','Ottawa','Vancouver','Montreal'],1],
-    ['Qual país abriga a cidade de Machu Picchu?', ['Peru','Chile','Bolívia','Equador'],0],
-    ['Em qual continente está o deserto do Saara?', ['Ásia','África','Europa','Oceania'],1],
-    ['Qual é a capital de Portugal?', ['Porto','Lisboa','Coimbra','Faro'],1]
+    ['Qual é a capital do Canadá?', ['Toronto','Ottawa','Vancouver','Torresmo'],1],
+    ['Qual país abriga a cidade de Machu Picchu?', ['Peru','Patagonia','Bolívia','Equador'],0],
+    ['Em qual continente está o deserto do Saara?', ['Ásia','África','Europa','Nordeste'],1],
+    ['Qual é a capital de Portugal?', ['Porto','Lisboa','Coimbra','Cristiano Ronaldo'],1]
   ],
   'Filmes e séries': [
     ['Em Star Wars, qual é o nome da energia que conecta os Jedi?', ['A Força','O Núcleo','A Chama','O Éter'],0],
@@ -280,55 +280,55 @@ const mediumQuestions = {
     ['O que significa CPU?', ['Unidade Central de Processamento','Controle Principal de Usuário','Código de Programa Universal','Unidade de Placa Única'],0],
     ['Qual linguagem é usada para estruturar páginas web?', ['HTML','CSS','SQL','Python'],0],
     ['O que é armazenamento em nuvem?', ['Guardar dados em servidores acessíveis pela internet','Guardar arquivos somente em pen drives','Salvar dados apenas na memória RAM','Imprimir arquivos pela internet'],0],
-    ['Qual destes é um sistema operacional?', ['Linux','Google','HTML','Wi-Fi'],0]
+    ['Qual destes é um sistema operacional?', ['Linux','Google','HTML','Grok'],0]
   ],
   'Esportes': [
-    ['Quantos jogadores de cada equipe ficam em campo no futebol?', ['9','10','11','12'],2],
+    ['Quantos jogadores de cada equipe ficam em campo no futebol?', ['9','10','11','15'],2],
     ['Em qual país surgiram as regras modernas do futebol?', ['Inglaterra','Brasil','França','Itália'],0],
     ['Quantos pontos vale uma cesta comum dentro da linha de três no basquete?', ['1','2','3','4'],1],
     ['Qual torneio de tênis é disputado na grama em Londres?', ['Wimbledon','Roland Garros','US Open','Australian Open'],0]
   ],
   'História': [
     ['Em que ano ocorreu a Proclamação da República no Brasil?', ['1822','1888','1889','1930'],2],
-    ['Qual foi o principal objetivo da Lei Áurea?', ['Abolir legalmente a escravidão','Criar a República','Declarar a Independência','Criar a Constituição de 1988'],0],
+    ['Qual foi o principal objetivo da Lei Áurea?', ['Abolir legalmente a escravidão','Criar a República','Declarar a Independência','Satisfazer a Inglaterra pq o Brasil tava devendo para ela'],0],
     ['Qual civilização construiu Machu Picchu?', ['Inca','Romana','Egípcia','Grega'],0],
-    ['Quem foi o líder da Revolução Russa de Outubro de 1917?', ['Vladimir Lenin','Napoleão Bonaparte','Júlio César','Winston Churchill'],0]
+    ['Quem foi o líder da Revolução Russa de Outubro de 1917?', ['Vladimir Lenin','Napoleão Bonaparte','Karl Marx','Stalin'],0]
   ],
   'Geografia': [
     ['Qual é o maior país do mundo em extensão territorial?', ['Canadá','China','Rússia','Estados Unidos'],2],
-    ['Qual linha imaginária divide a Terra em hemisférios Norte e Sul?', ['Trópico de Câncer','Linha do Equador','Meridiano de Greenwich','Trópico de Capricórnio'],1],
+    ['Qual linha imaginária divide a Terra em hemisférios Norte e Sul?', ['Trópico de Câncer','Linha do Equador','Meridiano de Greenwich','Gran Line'],1],
     ['Qual é o bioma predominante no estado do Paraná?', ['Mata Atlântica','Caatinga','Pantanal','Pampa'],0],
     ['Qual é a capital do Japão?', ['Seul','Pequim','Tóquio','Bangkok'],2]
   ],
   'Natureza': [
-    ['Qual é o processo pelo qual as plantas produzem seu alimento?', ['Fotossíntese','Respiração pulmonar','Fermentação alcoólica','Digestão'],0],
+    ['Qual é o processo pelo qual as plantas produzem seu alimento?', ['Fotossíntese','Respiração pulmonar','Fermentação alcoólica','Indústria alimenticia plantoide '],0],
     ['Qual gás é mais abundante na atmosfera terrestre?', ['Oxigênio','Nitrogênio','Gás carbônico','Hidrogênio'],1],
     ['Como se chama a passagem da água do estado líquido para o gasoso?', ['Condensação','Solidificação','Evaporação','Fusão'],2],
-    ['Qual destes é um recurso natural renovável?', ['Energia solar','Petróleo','Carvão mineral','Gás natural'],0]
+    ['Qual destes é um recurso natural renovável?', ['Energia solar','Petróleo','Fusão Nuclear','Gás natural'],0]
   ],
   'Jogos': [
-    ['Qual é o nome do herói principal da série The Legend of Zelda?', ['Link','Zelda','Ganondorf','Mario'],0],
+    ['Qual é o nome do herói principal da série The Legend of Zelda?', ['Link','Zelda','Ganondorf','Marlon'],0],
     ['Em Pokémon, qual tipo é imune a ataques do tipo Fantasma?', ['Normal','Água','Fogo','Planta'],0],
-    ['Qual empresa desenvolveu Minecraft?', ['Mojang','Nintendo','Valve','Ubisoft'],0],
-    ['Em Among Us, qual é o objetivo do impostor?', ['Sabotar e eliminar tripulantes','Consertar todas as tarefas','Pilotar a nave sozinho','Encontrar tesouros'],0]
+    ['Qual empresa desenvolveu Minecraft?', ['Mojang','Nintendo','Valve','Epic Games'],0],
+    ['Em Among Us, qual é o objetivo do impostor?', ['Sabotar e eliminar tripulantes','Consertar todas as tarefas','Mandar os outros de Inter','Encontrar tesouros'],0]
   ],
   'Corpo humano': [
-    ['Qual órgão é responsável por filtrar o sangue e produzir urina?', ['Rins','Pulmões','Estômago','Coração'],0],
+    ['Qual órgão é responsável por filtrar o sangue e produzir urina?', ['Rins','Pulmões','Arteria maior','Coração'],0],
     ['Qual é o maior órgão do corpo humano?', ['Pele','Fígado','Cérebro','Pulmão'],0],
     ['Qual componente do sangue transporta oxigênio?', ['Hemácias','Plaquetas','Leucócitos','Plasma apenas'],0],
-    ['Qual sistema coordena respostas e movimentos do corpo?', ['Sistema nervoso','Sistema digestório','Sistema urinário','Sistema tegumentar'],0]
+    ['Qual sistema coordena respostas e movimentos do corpo?', ['Sistema nervoso','Sistema digestório','Sistema Movimentador','Sistema tegumentar'],0]
   ]
 };
 
 const hardQuestionsByTheme = {
   'Conhecimentos gerais': [
     ['Qual é o valor aproximado da raiz quadrada de 2?', ['1,14','1,41','1,73','2,14'],1],
-    ['Qual cientista formulou as leis clássicas do movimento?', ['Isaac Newton','Albert Einstein','Galileu Galilei','Nikola Tesla'],0],
+    ['Qual cientista formulou as leis clássicas do movimento?', ['Isaac Newton','Albert Einstein','Galileu Galilei','Nikolas Maduro'],0],
     ['Qual elemento químico tem símbolo Fe?', ['Ferro','Flúor','Fósforo','Frâncio'],0]
   ],
   'Animais': [
     ['Qual grupo de animais possui penas?', ['Mamíferos','Aves','Répteis','Anfíbios'],1],
-    ['Qual é o nome científico do ser humano moderno?', ['Homo sapiens','Homo erectus','Pan troglodytes','Australopithecus'],0],
+    ['Qual é o nome científico do ser humano moderno?', ['Homo sapiens','Homo erectus','Macac osempe los','Australopithecus'],0],
     ['Qual destes animais é um cetáceo?', ['Golfinho','Tubarão','Pinguim','Lontra'],0]
   ],
   'Anime': [
@@ -344,7 +344,7 @@ const hardQuestionsByTheme = {
   'Filmes e séries': [
     ['Qual diretor dirigiu a trilogia O Senhor dos Anéis?', ['Peter Jackson','Steven Spielberg','James Cameron','Christopher Nolan'],0],
     ['Em Matrix, qual é o nome do personagem principal?', ['Neo','Morpheus','Trinity','Smith'],0],
-    ['Qual é o nome do planeta natal do Superman?', ['Krypton','Vulcano','Tatooine','Pandora'],0]
+    ['Qual é o nome do planeta natal do Superman?', ['Krypton','Vulcano','Tatooine','Ampercity'],0]
   ],
   'Tecnologia': [
     ['Qual protocolo é usado para transferir páginas web de forma segura?', ['HTTPS','FTP','SMTP','Telnet'],0],
@@ -354,17 +354,17 @@ const hardQuestionsByTheme = {
   'Esportes': [
     ['Quantos sets um jogador precisa vencer para ganhar uma partida masculina de simples em Grand Slam?', ['2','3','4','5'],1],
     ['Qual país venceu a primeira Copa do Mundo de futebol, em 1930?', ['Uruguai','Brasil','Itália','Argentina'],0],
-    ['No atletismo, qual prova combina corrida, saltos e arremessos?', ['Decatlo','Maratona','Revezamento 4x100','Marcha atlética'],0]
+    ['No atletismo, qual prova combina corrida, saltos e arremessos?', ['Decatlo','Maratona','Revezamento 4x100','Triato'],0]
   ],
   'História': [
-    ['Qual tratado encerrou oficialmente a Primeira Guerra Mundial com a Alemanha?', ['Tratado de Versalhes','Tratado de Tordesilhas','Tratado de Paris de 1763','Tratado de Utrecht'],0],
+    ['Qual tratado encerrou oficialmente a Primeira Guerra Mundial com a Alemanha?', ['Tratado de Versalhes','Tratado de Tordesilhas','Tratado de Paris de 1763','Tratado de Zuguemberg'],0],
     ['Qual revolta colonial brasileira ocorreu em Minas Gerais no século XVIII?', ['Inconfidência Mineira','Revolta da Vacina','Cabanagem','Balaiada'],0],
     ['Em que ano foi promulgada a atual Constituição brasileira?', ['1988','1964','1945','1994'],0]
   ],
   'Geografia': [
     ['Qual é o ponto mais alto do continente africano?', ['Monte Kilimanjaro','Monte Everest','Monte Elbrus','Aconcágua'],0],
-    ['Qual corrente marítima fria influencia o litoral oeste da América do Sul?', ['Corrente de Humboldt','Corrente do Golfo','Corrente do Brasil','Corrente de Kuroshio'],0],
-    ['Qual país é atravessado pela Linha do Equador e possui Quito como capital?', ['Equador','Peru','Colômbia','Bolívia'],0]
+    ['Qual corrente marítima fria influencia o litoral oeste da América do Sul?', ['Corrente de Humboldt','Corrente do Golfo','Corrente do Brasil','Corrente do atlantico sul'],0],
+    ['Qual país é atravessado pela Linha do Equador e possui Quito como capital?', ['Equador','Peru','Colômbia','Cuba'],0]
   ],
   'Natureza': [
     ['Qual organela realiza a fotossíntese nas células vegetais?', ['Cloroplasto','Mitocôndria','Ribossomo','Lisossomo'],0],
